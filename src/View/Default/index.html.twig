@@ -1,0 +1,61 @@
+{% extends'layout.html.twig' %}
+
+
+{% block baner %}
+
+    <div id="block-for-slider">
+        <div id="viewport">
+            <ul id="slidewrapper">
+                {% for news in lastFour %}
+                    <li class="slide">
+                        <img src="/webroot/images/images_of_news/{{ news.titleImage }}" alt="1" class="slide-img">
+                        <div class="float-left font-medium">
+                            {{ news.name|slice(0,15) }}{% if news.name|length > 15 %}...{% endif %}
+                        </div>
+
+                        <div class="float-right margin-top9px"><a href="{{ path('paper_show',{'id' : news.id}) }}">Подробнее&#62;&#62;</a></div>
+                        <div></div>
+                    </li>
+
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    <div class=" card text-white  border-info mb-3">
+        <div class="card-header">
+            <div class="float-left"><legend>Пять послених новостей на все темы</legend>
+            </div>
+            <button id="topfivebutton" type="button" class="btn btn-sm btn-primary  float-right">Показать/скрыть</button>
+        </div>
+
+        <div id="topfivebody" class="card-body text-info" >
+
+    {% for key,item in collectionNews %}
+
+
+        <h5 class="card-title"><a href="{{ path('news_by_category',{'id' :  item[0].categoryId  }) }}" class="text-warning">{{ key }}</a></h5>
+        {{ news.name }}
+        {% for news in item %}
+            <a href="{{ path('paper_show',{'id' : news.id}) }}">{{ news.name }}</a><span>&#160;&#160;&#160;&#160;&#160;&#160;</span>
+
+        {% endfor %}
+        <hr>
+        <br>
+    {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+

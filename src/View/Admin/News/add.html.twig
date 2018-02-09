@@ -1,0 +1,106 @@
+{% extends'admin_layout.html.twig' %}
+
+{% block content %}
+
+    <h1>Создание Новости</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Зашоловок:</label>
+            <input class="form-control" type="text" name="name" placeholder="Name:"/>
+        </div>
+        <div class="form-group">
+            <label>Текст статьи:</label>
+            <textarea  class="form-control height-330px" name="news_body" placeholder="News bod:"></textarea>
+        </div>
+            <div class="form-group">
+                <label for="inputCity">Категория:</label>
+                <select  class="form-control" name="category">
+                    {%  for category in categories  %}
+                        <option value="{{ category.getId }}"> {{ category.getName }} </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="analitic"> Аналитическая статья вкл/выкл
+            </div>
+        <div class="form-group">
+            <label>Титульное изображение(JPG):</label>
+            <input type="file" class="form-control" id="file" name="titleimage">
+        </div>
+        <input class="btn btn-primary" type="submit" name="submit"/>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+    </form>
+
+
+
+
+
+{% endblock %}
+
+
+
+
+{#<form method="post" enctype="multipart/form-data">#}
+
+
+
+
+
+
+    {#<div class="form-group">#}
+        {#<input class="form-control" type="text" name="name" placeholder="Name:"/>#}
+        {#<input class="form-control" type="text" name="title_image" placeholder="Title_image:"/>#}
+        {#<textarea  class="form-control" name="news_body" placeholder="News bod:"></textarea>#}
+        {#<p>Category#}
+            {#<select  class="form-control" name="category">#}
+                {#{%  for category in categories  %}#}
+
+                    {#<option value="{{ category.getId }}"> {{ category.getName }} </option>#}
+                {#{% endfor %}#}
+            {#</select>#}
+        {#</p>#}
+        {#<input type="file" class="form-control" id="file" name="attachment">#}
+        {#<input type="checkbox" name="analitic">#}
+        {#<input class="btn btn-primary" type="submit" name="submit"/>#}
+
+
+
+    {#</div>#}
+
+{#</form>#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

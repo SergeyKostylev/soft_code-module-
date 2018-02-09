@@ -1,0 +1,72 @@
+parameters:
+    database_user: 'root'
+    database_name: 'news'
+    database_host: 'localhost'
+    database_password: ~
+    uploads_dir: 'uploads'
+    noreply_email: 'noreply@mvc.com'
+    some_api_key: '5sdf7hsf5s76f5hs7d5f'
+
+
+mailer:
+    email: 's03540@ukr.net'
+    password: '12345tools1'
+    host: 'smtp.ukr.net'
+    port: 465
+    encryption: 'ssl'
+    allow_self_signe: true
+    verify_peer: false
+
+
+routing:
+    homepage:
+        pattern: /
+        controller: DefaultController
+        action: indexAction
+    sign_in:
+        pattern: /sign-in
+        controller: SecurityController
+        action: loginAction
+
+    login_exit:
+        pattern: /logout
+        controller: SecurityController
+        action: logoutAction
+
+
+    registration:
+        pattern: /registration
+        controller: SecurityController
+        action: registrationAction
+
+    news_by_category:
+        pattern: /news/category/{id}
+        controller: NewsController
+        action: newsByCategoryAction
+        parameters:
+            id: '[0-9]+'
+
+    paper_show:
+        pattern: /paper/{id}
+        controller: NewsController
+        action: paperShowAction
+        parameters:
+            id: '[0-9]+'
+
+
+#
+    admin_news_add:
+        pattern: /admin/add/news
+        controller: Admin\NewsController
+        action: addAction
+
+
+#    admin_book_edit:
+#      pattern: /admin/book_edit/{id}
+#      controller: Admin\BookController
+#      action: editAction
+#      access: admin
+#      parameters:
+#          id: '[0-9]+'
+
+

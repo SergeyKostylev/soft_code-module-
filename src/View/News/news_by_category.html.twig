@@ -1,0 +1,23 @@
+{% extends'layout.html.twig' %}
+
+{% block content %}
+
+
+    <i>Новости на тему</i> : <span class="font-medium">{{ category.name }}</span>
+  <hr class="bg-primary">
+    {% for news in news_collection %}
+
+        <div class="alert alert-primary" role="alert">
+           <span class="font-medium">{{ news.name }}<br></span><a href="{{ path('paper_show',{'id' : news.id}) }}">Подробнее&#62;&#62;</a>
+            <br><i class="float-right margin-top-15px">{{ news.creteDate|date("d.m.Y") }}</i>
+        </div>
+        <br>
+    {% endfor %}
+
+
+
+{% endblock %}
+
+
+
+

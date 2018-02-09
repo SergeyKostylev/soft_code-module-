@@ -1,0 +1,46 @@
+{% extends'layout.html.twig' %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="margin-top9px"><i>Статьи&#62;&#62;{{ category.name }}</i></div>
+        <h2>{{ news.name }}</h2>
+<img src="/webroot/images/images_of_news/{{ news.titleImage }}" class="title-image">
+        <div>Общее число просмотров: <span id="allAmount">{{ news.showAmount }}</span></div>
+        <div>Сейчас читают: <span id="showNow">0</span></div>
+        <div class="bg-white text-dark ">{{ news.newsBody }}
+            <div>
+                <div class="bg-dark margin-top9px float-right">
+                    <i>{{ news.creteDate|date("d.m.Y") }}</i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br>
+<br>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
