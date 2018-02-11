@@ -26,7 +26,7 @@ class NewsController extends BaseController
 
 
         if($request->isPost()){
-
+            $analitic = (isset($_POST['analitic']))? 1 : 0;
             if($form->isValid()){
                 $storage = new \Upload\Storage\FileSystem(NEWS_IMAGE_DIR);
                 $file = new \Upload\File('titleimage', $storage);
@@ -43,7 +43,9 @@ class NewsController extends BaseController
 //                    $errors = $file->getErrors();
 //                }
 
-                $analitic = (isset($_POST['analitic']))? 1 : 0;
+
+
+
                 $this->getRepository('news')->add(
                     $form->getName(),
                     $form->getCategory(),

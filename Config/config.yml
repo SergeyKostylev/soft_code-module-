@@ -54,11 +54,35 @@ routing:
             id: '[0-9]+'
 
 
-#
+#API
+
+    show_amount:
+        pattern: /showamount/{idnews}/{shownow}
+        controller: APIController
+        action: showAmount
+        parameters:
+            idnews: '[0-9]+'
+            shownow: '[0-9]+'
+
+
+    api_add_comment:
+        pattern: /api/add/comment
+        controller: APIController
+        action: addComment
+
+
+#admin
     admin_news_add:
+        access : admin
         pattern: /admin/add/news
         controller: Admin\NewsController
         action: addAction
+
+    admin_home:
+        access : admin
+        pattern: /admin
+        controller: Admin\DefaultController
+        action: indexAction
 
 
 #    admin_book_edit:

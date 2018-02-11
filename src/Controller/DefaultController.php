@@ -12,7 +12,6 @@ class DefaultController extends BaseController
 {
     public function indexAction(Request $request)
     {
-
         $categorys = $this->getRepository('category')->findAll();
         $collection = [];
 
@@ -25,12 +24,13 @@ class DefaultController extends BaseController
         foreach ($collection as $key => $new){
             if (($new == null)){unset($collection[$key]);}
         }
+         $analiticNews = array_slice($this->getRepository('news')->analiticNews(), 0, 5);
+        $collection['Аналитика'] = $analiticNews;
 
         return $this->render('index.html.twig',
             ['collectionNews' => $collection,
                 'lastFour' => $lastFour
             ]);
-
     }
 
 }

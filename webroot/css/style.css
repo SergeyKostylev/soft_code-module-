@@ -2,19 +2,17 @@
   margin: 0 10px 10px 0;
 }
 
-/*#topfivebody{*/
-  /*display: none;*/
-/*}*/
-
-
-.imagesize{
-  height: 220px;
-  width: 455px;
+.disp-none{
+  display: none;
 }
 
 .font-medium
 {
   font-size: 18pt;
+}
+.font-normal
+{
+  font-size: 15pt;
 }
 .vert-align-center {
   vertical-align: center;
@@ -22,6 +20,10 @@
 .margin-top-15px
 {
   margin-top: -15px;
+}
+.margin-top-23px
+{
+  margin-top: -23px;
 }
 .margin-top9px
 {
@@ -40,6 +42,15 @@
 .figure
 {
   width:50%;
+}
+.comment-form
+{
+  height: 250px;
+}
+.comment-textarea
+{
+  height: 150px;
+  resize: none
 }
 
 

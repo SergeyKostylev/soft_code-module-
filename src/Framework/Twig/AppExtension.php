@@ -20,7 +20,8 @@ class AppExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('path', [$this, 'getUri']),
-            new \Twig_SimpleFunction('sessionGet', [$this, 'sessionGet'])
+            new \Twig_SimpleFunction('sessionGet', [$this, 'sessionGet']),
+            new \Twig_SimpleFunction('getFlash', [$this, 'getFlash'])
         );
     }
 
@@ -35,4 +36,15 @@ class AppExtension extends \Twig_Extension
 
         return $this->router->generateUrl($name, $parameters);
     }
+
+    public function getFlash()
+    {
+        if(Session::get('flash')) {
+            $message = Session::get('flash');
+            Session::remove('flash');
+            return $message;
+        }
+        return null;
+    }
+
 }

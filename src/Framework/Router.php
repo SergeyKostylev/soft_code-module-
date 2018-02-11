@@ -24,7 +24,6 @@ class Router
     public function generateUrl($name, array $parameters = [])
     {
         $routes = $this->routes;
-//dump($routes);
         foreach ($routes as $key => $route)
         {
             if ($name == $key){
@@ -34,11 +33,11 @@ class Router
                     $pattern = '@{[a-zA-Z]+}@';
                     preg_match_all($pattern,$str,$matches);
                     $mas=array_combine($matches[0],$parameters);
-//                    dump($mas);
+
                     foreach ($mas as $keyy => $item){
                         $pattern = $keyy;
                         $str = str_replace($pattern,$item,$str);
-//                        dump($str);
+
                     }
                     return $str;
                 }
@@ -49,17 +48,15 @@ class Router
 
     public function match(Request $request)
     {
-        $uri = $request->getUri(); // book/213
+        $uri = $request->getUri();
         ;
         $routes = $this->routes;
-//        dump($routes);
 
         foreach ($routes as $route) {
             $pattern = $route['pattern'];
-            // var_dump($pattern);
+
 
             if (!empty($route['parameters'])) {
-                // var_dump($route['parameters']);
                 foreach ($route['parameters'] as $name => $regex) {
                     $pattern = str_replace(
                         '{' . $name . '}',
@@ -71,13 +68,12 @@ class Router
 
             $pattern = '@^' . $pattern . '$@';
 
-//            var_dump($pattern);
+
 
             if (preg_match($pattern, $uri, $matches)) {
-                // var_dump($matches);
-                // remove match by whole regexp
+
                 array_shift($matches);
-                // var_dump($matches);
+
 
                 if (!empty($route['parameters'])) {
                     $result = array_combine(
@@ -85,7 +81,7 @@ class Router
                         $matches
                     );
 
-//                   dump($result);die();
+
 
                     $request->mergeGetWithArray($result);
                 }
@@ -94,15 +90,12 @@ class Router
 
                     if (isset($route['access'])) {
                         $access=$route['access'];
-//                        dump($access);
                         if(Session::get("{$access}") != 'ok'){
 
-                            throw new \Exception('access denied');}
+                            throw new \Exception('В доступе отказано');}
 
 
                     }
-
-
 
                 return;
             }

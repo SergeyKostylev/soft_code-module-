@@ -2,18 +2,50 @@
 
 {% block content %}
 
+    <span data-newsid="{{ news.id }}" id="newsid"></span>
 
     <div class="container">
         <div class="margin-top9px"><i>Статьи&#62;&#62;{{ category.name }}</i></div>
         <h2>{{ news.name }}</h2>
-<img src="/webroot/images/images_of_news/{{ news.titleImage }}" class="title-image">
+        <img src="/webroot/images/images_of_news/{{ news.titleImage }}" class="title-image">
         <div>Общее число просмотров: <span id="allAmount">{{ news.showAmount }}</span></div>
-        <div>Сейчас читают: <span id="showNow">0</span></div>
-        <div class="bg-white text-dark ">{{ news.newsBody }}
-            <div>
-                <div class="bg-dark margin-top9px float-right">
-                    <i>{{ news.creteDate|date("d.m.Y") }}</i>
+        <div>Сейчас читают: <span id="showNow">1</span></div>
+        <div class=" margin-top-23px float-right">
+            <i>{{ news.creteDate|date("d.m.Y") }}</i>
+        </div>
+        <div class="bg-white text-dark ">
+            {{ news.newsBody }}
+            {%  if not sessionGet('user') and  news.analitic %}
+                <div class="text-danger font-normal">
+                    <i>
+                        &#160;&#160;Данная статья является Аналитикой.
+                        <br>
+                        &#160;&#160;Для получения полного объема необходима регистрация
+                    </i>
                 </div>
+            {% endif %}
+
+
+        </div>
+        <div class="get-message-ok disp-none my-alert bg-success">
+            <strong><div class="text-center" style="margin-bottom: 0px">Прокоментировано!</div></strong>
+        </div>
+        {%  if sessionGet('user')%}
+
+            <div class="bg-danger container comment-form">
+                <form>
+                    <div class="form-group">
+                        <label>&#160;</label>
+                        <textarea class="form-control comment-textarea"></textarea>
+                        <button type="button" class="add-comment-button margin-top9px btn btn-primary mb-2">Комментировать</button>
+                    </div>
+                </form>
+            </div>
+
+        {% endif %}
+        <div class="bg-primary">
+            <div class="container">
+                &#160;&#160; Коментарии:
             </div>
         </div>
     </div>

@@ -34,9 +34,10 @@ abstract class BaseController
         $path = trim($path, '\\');
         $path = str_replace('\\', DS, $path);
 
+
         $template = $path . DS . $template;
         if (!file_exists(VIEW_DIR . $template)){
-            dump($template);
+
             throw new \Exception("{$template} not to found");
         }
 

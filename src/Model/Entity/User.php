@@ -8,7 +8,6 @@ class User
     private $email;
     private $password;
     private $role;
-    private $avatar;
 
     public function __construct($email = null)
     {
@@ -81,23 +80,6 @@ class User
     public function setRole($role)
     {
         $this->role = $role;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param mixed $avatar
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
         return $this;
     }
 

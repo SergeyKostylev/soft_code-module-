@@ -1,10 +1,16 @@
 {% extends'layout.html.twig' %}
 
+
+
+
+
 {% block content %}
 
+    {#<span data-page="1" id="current-page-holder"></span>#}
 
     <i>Новости на тему</i> : <span class="font-medium">{{ category.name }}</span>
   <hr class="bg-primary">
+<div class="news-list">
     {% for news in news_collection %}
 
         <div class="alert alert-primary" role="alert">
@@ -13,6 +19,32 @@
         </div>
         <br>
     {% endfor %}
+
+</div>
+
+
+    <li class="page-item active page-item-template disp-none">
+        <a class="page-link">...</a>
+    </li>
+
+<div class="container">
+
+        <ul class="pagination pagination-lg disp-none">
+            {% for button in pagination %}
+                {% if button.isActive %}
+                    <li class="page-item active">
+                        <a class="page-link" href = '?page={{ button.page }}'>{{ button.text }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="#">{{ button.text }}</a>
+                    </li>
+            {% endif %}
+            {% endfor %}
+
+        </ul>
+
+</div>
 
 
 

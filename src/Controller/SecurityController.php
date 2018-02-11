@@ -21,30 +21,28 @@ class SecurityController extends BaseController
             $request->post('email'),
             $request->post('password')
         );
-
         if ($request->isPost()) {
-
             if ($form->isValid()) {
 
                 $user = $this
                     ->getRepository('User')
                     ->findByEmail($form->email);
 
-
                 if (!$user) {
-                  $this->reloadPageWithFlash('User not found', 'homepage');
+                  $this->reloadPageWithFlash('Неверное имя пользователя', 'homepage');
                 }
-
 
                 if (password_verify($form->password, $user->getPassword())) {
                     Session::set('user', $user->getEmail());
 
-
+//                    if ($user->getRole() == 'admin');{
+//                        $this->getRouter()->redirect('admin_home');
+//                    }
 
                     if (Session::get('user') == 'admin@admin.com'){
                         Session::set('admin','ok');
 
-                        $this->getRouter()->redirect('homepage');
+                        $this->getRouter()->redirect('admin_home');
                     }
 
 
@@ -59,7 +57,7 @@ class SecurityController extends BaseController
                     ;
                 }
 
-                $this->reloadPageWithFlash('User not found', 'homepage');
+                $this->reloadPageWithFlash('Неверный пароль', 'homepage');
             }
         }
 
@@ -85,7 +83,7 @@ class SecurityController extends BaseController
             if($form->isValid()){
 
                 if (!$form->samePasswords()){
-                    $this->reloadPageWithFlash('passwords are not equal', 'registration');
+                    $this->reloadPageWithFlash('Пароли не совпадают', 'registration');
                 }
                     $rez = $this
                         ->getRepository('User')
@@ -108,8 +106,6 @@ class SecurityController extends BaseController
 
 
     }
-
-
 
     private function reloadPageWithFlash($flash, $go_to)
     {

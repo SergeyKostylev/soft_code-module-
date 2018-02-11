@@ -8,21 +8,55 @@ $topfivebutton.on('click',function () {
 });
 
 
+var $addComment = $('.add-comment-button');
+    $addComment.on('click', function () {
+
+        var $commentField = $('.comment-textarea');
+        var $comment = $commentField.val();
+        var $blokOk = $('.get-message-ok');
+        var $commentForm = $('.comment-form');
+        $.post('/api/add/comment',{
+            newsid : $('#newsid').data('newsid'),
+            commentbody : $comment
+            },'json')
+        $commentForm.fadeOut(390);
+        $blokOk.fadeIn(700);
+        setTimeout( function() {$blokOk.fadeOut(390)} ,2100);
+
+
+    });
+
+
+
 var $allamount = $('#allAmount');
 var $shownow =$('#showNow');
-
     setInterval(function() {
-
-        var $rand =Math.floor( Math.random() * 5 );
-
+        var $rand =Math.floor( (Math.random() * 4)+1 );
         $shownow.text($rand);
-
+        var $newsId = $('#newsid');
+        var $id = $newsId.data('newsid');
+        var $showing =$shownow.text();
+        $.get('/showamount/' + $id +'/' + $showing, function(r) {
+            $allamount.text(r['amount']);
+        });
     }, 3000);
 
 
+    var $pagination =$('.pagination');
 
-
-
+    $pagination.children().filter( ':first , :last' ).remove();
+    $pagination.removeClass('disp-none');
+    var $bitweenbutton = $pagination.children().not( ':first , :last' );
+    $bitweenbutton.toggle();
+    var $template = $('.page-item-template');
+    var $treepointButton = $template.clone();
+    console.log($treepointButton);
+    $treepointButton.removeClass('disp-none');
+    $pagination.children().filter( ':first').after($treepointButton);
+    $treepointButton.on('click', function () {
+        $treepointButton.remove();
+        $pagination.children().fadeIn(1200);
+    });
 
 
 

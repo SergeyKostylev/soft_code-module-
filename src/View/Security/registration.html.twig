@@ -1,6 +1,6 @@
 {% extends'layout.html.twig' %}
 {% block content %}
-<h1>Registration page</h1>
+<h1>Регистрация</h1>
 
 <form  method="post">
     <input type="text" name="email" placeholder="Email:" value="{{ form.email }}"/>
@@ -9,7 +9,5 @@
     <input type="submit" name="submit"/>
 </form>
 
-{#<?=\Framework\Session::getFlash()?>#}
-
-
+    {{ getFlash() }}
 {% endblock %}

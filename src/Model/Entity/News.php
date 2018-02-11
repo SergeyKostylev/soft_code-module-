@@ -26,7 +26,7 @@ class News
      */
     public function setAnalitic($analitic)
     {
-        $this->analitic = (bool)$analitic;
+        $this->analitic = $analitic;
         return $this;
     }
 

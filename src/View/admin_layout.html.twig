@@ -22,10 +22,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ path('admin_homepage')}}">Home </a>
+                <a class="nav-link" href="{{ path('admin_home')}}">Главная страница админа </a>
             </li>
             <li class="nav-item">
-                <a  class="nav-link " href="{{ path('admin_books_list') }}">Books</a>
+                <a  class="nav-link " href="{{ path('admin_news_add') }}">Создать Новость</a>
             </li>
 
 
@@ -39,9 +39,6 @@
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item text-right" href="{{ path('homepage') }}">User layout</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-right" href="{{ path('dump') }}">Download Dump DB</a>
-                    <a class="dropdown-item text-right" href="{{ path('mailer') }}">Send mail to my Email</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-right"  href="{{ path('login_exit') }}">Exit</a>
                 </div>

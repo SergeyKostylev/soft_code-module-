@@ -36,7 +36,8 @@ class UserRepository
             return null;
         }
         $user = (new User ($res['email']))
-                ->setPassword($res['password'])
+                ->setPassword($res['password']
+                )->setRole($res['role'])
         ;
         return $user;
     }
@@ -52,6 +53,29 @@ class UserRepository
 
         return $res;
     }
+
+    public function getUserByEmail($email)
+    {
+
+        $sql = 'SELECT * FROM `user` WHERE email= :email LIMIT 1';
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute([
+            'email' => $email
+        ]);
+        $res = $sth->fetch(\PDO::FETCH_ASSOC);
+        if (!$res) {
+            return null;
+        }
+        $user = (new User ($res['email']))
+            ->setId($res['id'])
+            ->setPassword($res['password'])
+            ->setRole($res['role'])
+        ;
+        return $user;
+    }
+
+
+
     public function userAdd($email, $password)
     {
         $sql ='INSERT INTO `user` (email, password) VALUES (:email, :password)';
@@ -62,6 +86,26 @@ class UserRepository
             'password' => $password
             ]);
 
+    }
+
+    public function findById($id)
+    {
+        $sql='SELECT * FROM user WHERE id = :id';
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute([
+            'id'=>$id
+        ]);
+        $res=$sth->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$res){
+            return null;
+        }
+        $user = (new User ($res['email']))
+            ->setId($res['id'])
+            ->setPassword($res['password'])
+            ->setRole($res['role'])
+        ;
+        return $user;
     }
 
 

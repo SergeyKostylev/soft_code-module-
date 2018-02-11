@@ -18,7 +18,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="{{ path('homepage') }}">NEWS SITE</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,14 +26,9 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('homepage') }}">Home</a>
+                <a class="nav-link" href="{{ path('homepage') }}">Главная</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
+
         </ul>
         {% if sessionGet('user') %}
 
@@ -48,7 +43,7 @@
                         <a class="dropdown-item text-right" href="#">-----</a>
 
                         {% if sessionGet('user')=='admin@admin.com' %}
-                            <a class="dropdown-item text-right" href="{{ path('admin_homepage') }}">Admin layout</a>
+                            <a class="dropdown-item text-right" href="{{ path('admin_home') }}">Admin layout</a>
                         {% endif %}
 
                         <div class="dropdown-divider"></div>
@@ -58,6 +53,9 @@
             </div>
 
         {% else %}
+            <div class="text-danger font-medium">
+                {{ getFlash() }}&#160;&#160;&#160;
+            </div>
             <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('sign_in') }}">
 
                 <input class="form-control mr-sm-2" name="email" type="text" placeholder="Email:" value="admin@admin.com">
