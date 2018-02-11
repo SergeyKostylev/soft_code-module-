@@ -16,7 +16,7 @@ try{
     $config = Symfony\Component\Yaml\Yaml::parse(file_get_contents(CONF_DIR . 'config.yml'));
     $parameters = $config['parameters'];
     $routing = $config['routing'];
-    $mailer = $config['mailer'];
+//    $mailer = $config['mailer'];
 
     $dsn = "mysql: host={$parameters['database_host']}; dbname={$parameters['database_name']}";
 

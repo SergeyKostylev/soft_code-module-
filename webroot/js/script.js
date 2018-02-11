@@ -11,23 +11,74 @@ $topfivebutton.on('click',function () {
 var $addComment = $('.add-comment-button');
     $addComment.on('click', function () {
 
+
         var $commentField = $('.comment-textarea');
         var $comment = $commentField.val();
         var $blokOk = $('.get-message-ok');
         var $commentForm = $('.comment-form');
-        $.post('/api/add/comment',{
-            newsid : $('#newsid').data('newsid'),
-            commentbody : $comment
-            },'json')
-        $commentForm.fadeOut(390);
-        $blokOk.fadeIn(700);
-        setTimeout( function() {$blokOk.fadeOut(390)} ,2100);
 
+        if($comment.length < 30){
+            alert('Слишком короткий комментарий');
+        }
+        else {
+            $.post('/api/add/comment',{
+                newsid : $('#newsid').data('newsid'),
+                commentbody : $comment
+                },'json');
+            $commentForm.fadeOut(390);
+            $blokOk.fadeIn(700);
+            setTimeout(function () {
+                $blokOk.fadeOut(390)
+            }, 2100);
 
+        }
     });
 
 
+    var $serch = $('#serch-button');
+    var $searchField = $('#search-field');
+    var $lowpfield = $('#lowp-field');
 
+    $searchField.on('input',function () {
+        var $serchword = $searchField.val();
+        var $serchImput = $('.serch-imput');
+
+        $serchImput.children().remove();
+
+        if ($serchword !== ""){
+            $.get('/api/search',function (r)
+            {
+                var $allTegsWords = r.tagword;
+                var $allIds = r.ids;
+                var $amount = $allTegsWords.length;
+                var $tegs = [];
+
+                var w = $('.container-fluid');
+
+                for (var i = 0; i <= $amount; i++) {
+                    if ($allTegsWords[i] !== undefined){
+
+                        $lowpfield.fadeIn();
+
+                        var $ansver = $allTegsWords[i].indexOf($serchword);
+                        console.log($ansver);
+                        if( $ansver === 0 ){
+
+                            $tegs[$allIds[i]] = $allTegsWords[i];
+
+                            var $link  = $('#template-search').clone();
+                            $link.removeClass('disp-none');
+                            $link.children().filter('.search-link').attr("href", "/news/tag/" + $allIds[i]).text($allTegsWords[i]);
+                            $serchImput.append($link);
+                        }}
+                }
+            })
+        }
+        else {$lowpfield.fadeOut();}
+    });
+
+
+    
 var $allamount = $('#allAmount');
 var $shownow =$('#showNow');
     setInterval(function() {
@@ -50,7 +101,6 @@ var $shownow =$('#showNow');
     $bitweenbutton.toggle();
     var $template = $('.page-item-template');
     var $treepointButton = $template.clone();
-    console.log($treepointButton);
     $treepointButton.removeClass('disp-none');
     $pagination.children().filter( ':first').after($treepointButton);
     $treepointButton.on('click', function () {
@@ -62,17 +112,12 @@ var $shownow =$('#showNow');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+    $('#search-field').keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
 
 
 

@@ -12,7 +12,24 @@ class News
     private $crete_date;
     private $show_amount;
     private $analitic;
+    private $tags;
 
+    /**
+     * @return mixed
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function setTags(array $tags = [])
+    {
+        $this->tags = $tags;
+        return $this;
+    }
     /**
      * @return mixed
      */

@@ -40,8 +40,11 @@
 
     {% for key,item in collectionNews %}
 
-
-        <h5 class="card-title"><a href="{{ path('news_by_category',{'id' :  item[0].categoryId  }) }}" class="text-warning">{{ key }}</a></h5>
+        {%   if key=="Аналитика" %}
+            <h5 class="card-title"><a href="{{ path('analitic_news') }}" class="text-warning">Аналитика</a></h5>
+        {% else %}
+                <h5 class="card-title"><a href="{{ path('news_by_category',{'id' :  item[0].categoryId  }) }}" class="text-warning">{{ key }}</a></h5>
+        {% endif %}
         {{ news.name }}
         {% for news in item %}
             <a href="{{ path('paper_show',{'id' : news.id}) }}">{{ news.name }}</a><span>&#160;&#160;&#160;&#160;&#160;&#160;</span>

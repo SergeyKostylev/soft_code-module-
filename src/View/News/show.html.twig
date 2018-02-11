@@ -8,6 +8,11 @@
         <div class="margin-top9px"><i>Статьи&#62;&#62;{{ category.name }}</i></div>
         <h2>{{ news.name }}</h2>
         <img src="/webroot/images/images_of_news/{{ news.titleImage }}" class="title-image">
+        <div class="tags">
+            {% for tag in news.tags %}
+                <a href="{{ path('news_by_tag',{'id' : tag.id}) }}">#{{ tag.word }}</a>&#160;&#160;
+            {% endfor %}
+        </div>
         <div>Общее число просмотров: <span id="allAmount">{{ news.showAmount }}</span></div>
         <div>Сейчас читают: <span id="showNow">1</span></div>
         <div class=" margin-top-23px float-right">

@@ -2,10 +2,9 @@
 
 namespace Model\Repository;
 
-//use Model\Entity\Category;
-
 use Framework\Session;
 use Model\Entity\News;
+use Model\Entity\Tag;
 
 class NewsRepository
 {
@@ -42,14 +41,19 @@ class NewsRepository
 
     }
 
-    public function analiticNews()
+    public function analiticNews(array $options = [], $hydrationArray = false)
     {
+        $limitSql = '';
+
+        if (isset($options['current_page']) && isset($options['items_on_page'])) {
+            $page = $options['current_page'] - 1;
+            $count = $page * $options['items_on_page'];
+            $limitSql = "limit {$count}, {$options['items_on_page']}";
+        }
         $collection=[];
 
-        $sth = $this->pdo->query('select* from news WHERE analitic = 1;');
-        $res = $sth->fetch(\PDO::FETCH_ASSOC);
-        if (!$res)
-            return null;
+        $sth = $this->pdo->query('select * from news WHERE analitic = 1 ' . $limitSql . ';');
+
         while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
             $news = (new News())
                 ->setId($res['id'])
@@ -60,16 +64,15 @@ class NewsRepository
                 ->setCreteDate($res['create_data'])
                 ->setShowAmount($res['show_amount'])
                 ->setAnalitic($res['analitic'])
+                ->setTags($this->getTagsByNewsId($res['id']))
             ;
             $collection[]= $news;
-//            $collection
+
         }
+
         return $collection;
 
     }
-
-
-
 
     public function findFiveLastNews($categoryId)
     {
@@ -80,9 +83,6 @@ class NewsRepository
         $sth->execute([
                 'id' => $categoryId
         ]);
-        $res = $sth->fetch(\PDO::FETCH_ASSOC);
-        if (!$res)
-            return null;
         while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
             $news = (new News())
                 ->setId($res['id'])
@@ -93,6 +93,7 @@ class NewsRepository
                 ->setCreteDate($res['create_data'])
                 ->setShowAmount($res['show_amount'])
                 ->setAnalitic($res['analitic'])
+                ->setTags($this->getTagsByNewsId($res['id']))
             ;
             $collection[]= $news;
         }
@@ -109,9 +110,6 @@ class NewsRepository
 
         $sth = $this->pdo->query('SELECT * FROM news ORDER BY create_data DESC LIMIT 4;');
 
-        $res = $sth->fetch(\PDO::FETCH_ASSOC);
-        if (!$res)
-            return null;
         while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
             $news =(new News())
                 ->setId($res['id'])
@@ -121,6 +119,8 @@ class NewsRepository
                 ->setTitleImage($res['title_image'])
                 ->setCreteDate($res['create_data'])
                 ->setShowAmount($res['show_amount'])
+                ->setAnalitic($res['analitic'])
+                ->setTags($this->getTagsByNewsId($res['id']))
             ;
             $topTwo[]=$news;
         }
@@ -146,9 +146,6 @@ class NewsRepository
         $sth->execute([
             'id' => $category_id
         ]);
-        $res = $sth->fetch(\PDO::FETCH_ASSOC);
-        if (!$res)
-            return null;
 
         if ($hydrationArray) {
             return $res = $sth->fetchAll(\PDO::FETCH_ASSOC);
@@ -165,10 +162,63 @@ class NewsRepository
                 ->setCreteDate($res['create_data'])
                 ->setShowAmount($res['show_amount'])
                 ->setAnalitic($res['analitic'])
+                ->setTags($this->getTagsByNewsId($res['id']))
             ;
             $collection[]=$category;
         }
 
+        return $collection;
+
+    }
+
+    public function newsDyTag($tag_id, array $options = [], $hydrationArray = false)
+    {
+        $limitSql = '';
+
+        if (isset($options['current_page']) && isset($options['items_on_page'])) {
+            $page = $options['current_page'] - 1;
+            $count = $page * $options['items_on_page'];
+            $limitSql = "limit {$count}, {$options['items_on_page']}";
+        }
+
+        $collection=[];
+
+
+        $sth = $this->pdo->prepare('SELECT n.id,
+                                            n.name,
+                                            n.category_id,
+                                            n.news_body,
+                                            n.title_image,
+                                            n.create_data,
+                                            n.show_amount,
+                                            n.analitic
+                                            From news n
+                                            JOIN news_tag nt ON n.id = nt.news_id
+                                            JOIN tag t ON nt.tag_id = t.id
+                                            WHERE t.id = :id '. $limitSql .';');
+        $sth->execute([
+            'id' => $tag_id
+        ]);
+
+        if ($hydrationArray) {
+            return $res = $sth->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
+
+            $category =(new News())
+                ->setId($res['id'])
+                ->setName($res['name'])
+                ->setCategoryId($res['category_id'])
+                ->setNewsBody($res['news_body'])
+                ->setTitleImage($res['title_image'])
+                ->setCreteDate($res['create_data'])
+                ->setShowAmount($res['show_amount'])
+                ->setAnalitic($res['analitic'])
+                ->setTags($this->getTagsByNewsId($res['id']))
+            ;
+            $collection[]=$category;
+        }
         return $collection;
 
     }
@@ -185,7 +235,7 @@ class NewsRepository
         $news_body = $res['news_body'];
         $prepareText='';
         $sentences_array =preg_split("/[.?!] |[.?!]|\.{3,}/", $news_body);
-        $sentences_array = array_splice($sentences_array,0,5);
+        $sentences_array = array_splice($sentences_array,0,3);
 
         foreach ($sentences_array as $item){
             $prepareText.= $item . '. ';
@@ -203,7 +253,9 @@ class NewsRepository
             ->setTitleImage($res['title_image'])
             ->setCreteDate($res['create_data'])
             ->setShowAmount($res['show_amount'])
-            ->setAnalitic($res['analitic']);
+            ->setAnalitic($res['analitic'])
+            ->setTags($this->getTagsByNewsId($res['id']))
+            ;
 
     }
 
@@ -214,7 +266,43 @@ class NewsRepository
         return $sth->fetchColumn();
     }
 
+    public function countAnaliticNews()
+    {
+        $sth = $this->pdo->query('select count(*) as count from news WHERE analitic = 1;');
+
+        return $sth->fetchColumn();
+    }
+
+    public function countTagNews($tag_id)
+    {
+        $sth = $this->pdo->prepare('SELECT count(*) as count From news n
+                                                JOIN news_tag nt ON n.id = nt.news_id
+                                                JOIN tag t ON nt.tag_id = t.id
+                                                WHERE t.id = :id;');
+        $sth->execute([
+            'id' => $tag_id
+        ]);
+
+        return $sth->fetchColumn();
+    }
 
 
+    public function getTagsByNewsId($news_id)
+    {
+        $collection=[];
+        $sth = $this->pdo->prepare('Select t.id, t.word 
+                                                from news_tag nt
+                                                JOIN tag t ON  t.id = nt.tag_id
+                                                WHERE nt.news_id = :id;');
+        $sth->execute([
+            'id' => $news_id
+        ]);
+        while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
+            $tag =new Tag($res['id'],$res['word']);
+            $collection[]=$tag;
+        }
+
+        return $collection;
+    }
 
 }

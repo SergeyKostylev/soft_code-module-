@@ -16,6 +16,14 @@
 </head>
 <body>
 
+{#Template searsh imput#}
+<div id="template-search" class="disp-none">
+    <a class="search-link"></a>
+    <br>
+</div>
+
+
+{#<datalist id="teg-list"></datalist>#}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="{{ path('homepage') }}">NEWS SITE</a>
@@ -28,8 +36,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('homepage') }}">Главная</a>
             </li>
+            <li class="nav-item">
+                <form class="form-inline ">
+                    <input id="search-field" class="form-control" name="search" autocomplete="off" type="text" placeholder="Поиск:" list="teg-list">
+                </form>
 
+                <div id="lowp-field" class="bg-white my-form-control float-left serch-imput" style="display: none">
+
+
+                </div>
+            </li>
+            {#<li class="nav-item">#}
+                {#<button type="button" id="serch-button" class="btn btn-success">Проба</button>#}
+            {#</li>#}
         </ul>
+
         {% if sessionGet('user') %}
 
             <div class="nav-item dropdown">

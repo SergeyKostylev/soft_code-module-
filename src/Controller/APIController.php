@@ -52,7 +52,30 @@ class APIController extends BaseController
 
         $this->getRepository('comment')->uploadComment($news_id,$user->getId(),$comment_body, $allow_show);
 
+    }
+
+//          /api/search
+    public function search(Request $request )
+    {
+        $tegs =$this->getRepository('tag')->findAll();
+        $collection = [];
+        $ids = [];
+        $tagword =[];
+        foreach ($tegs as $teg){
+            $collection[$teg->getId()] = $teg->getWord();
+            $ids[] = $teg->getId();
+            $tagword [] =  $teg->getWord();
+        }
+//        dump($collection);
+        header('Content-type: application/json');
+
+        return json_encode([
+                            'collection' => $collection,
+                            'ids' => $ids,
+                            'tagword' => $tagword
+        ]);
 
     }
+
 
 }

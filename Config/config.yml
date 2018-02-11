@@ -8,14 +8,14 @@ parameters:
     some_api_key: '5sdf7hsf5s76f5hs7d5f'
 
 
-mailer:
-    email: 's03540@ukr.net'
-    password: '12345tools1'
-    host: 'smtp.ukr.net'
-    port: 465
-    encryption: 'ssl'
-    allow_self_signe: true
-    verify_peer: false
+#mailer:
+#    email: 's03540@ukr.net'
+#    password: '12345tools1'
+#    host: 'smtp.ukr.net'
+#    port: 465
+#    encryption: 'ssl'
+#    allow_self_signe: true
+#    verify_peer: false
 
 
 routing:
@@ -46,6 +46,18 @@ routing:
         parameters:
             id: '[0-9]+'
 
+    analitic_news:
+        pattern: /news/analitic
+        controller: NewsController
+        action: analiticNewsAction
+
+    news_by_tag:
+        pattern: /news/tag/{id}
+        controller: NewsController
+        action: newsByTagAction
+        parameters:
+            id: '[0-9]+'
+
     paper_show:
         pattern: /paper/{id}
         controller: NewsController
@@ -70,6 +82,11 @@ routing:
         controller: APIController
         action: addComment
 
+
+    api_search:
+        pattern: /api/search
+        controller: APIController
+        action: search
 
 #admin
     admin_news_add:
