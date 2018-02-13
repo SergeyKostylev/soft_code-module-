@@ -30,6 +30,35 @@ class TagRepository
         return $tag;
     }
 
+    public function findByWord($word)
+    {
+        $sql='SELECT * From tag WHERE word = "'.$word.'";';
+        $sth = $this->pdo->query($sql);
+        $res=$sth->fetch(\PDO::FETCH_ASSOC);
+        if (!$res){
+            return null;
+        }
+        $tag = new Tag($res['id'],$res['word']);
+        return $tag;
+    }
+
+    public function getNewIdOfTag()
+    {
+        $sth = $this->pdo->query('SELECT MAX(id) FROM tag;');
+        $res = $sth->fetch(\PDO::FETCH_ASSOC);
+        $value= (int)$res['MAX(id)'];
+        $value++;
+        return $value;
+
+    }
+
+    public function addTag($id,$word)
+    {
+        $sth = $this->pdo->query('INSERT INTO tag (id, word) VALUES ('.$id.', "'.$word.'");');
+
+    }
+
+
     public function findAll()
     {
         $collection=[];
@@ -63,31 +92,5 @@ class TagRepository
         return $collection;
     }
 
-
-
-//    public function add($name,$category,$news_bod,$title_image, $analitic)
-//    {
-//
-//        $sth = $this->pdo->prepare('INSERT INTO `news` (
-//                                    `id`,
-//                                    `name`,
-//                                    `category_id`,
-//                                    `news_body`,
-//                                    `title_image`,
-//                                    `create_data`,
-//                                    `show_amount`,
-//                                    `analitic`)
-//                                    VALUES (NULL, :news_name, :category_id, :news_body, :title_image, CURRENT_TIMESTAMP, :show_amount, :analitic);');
-//        $sth->execute([
-//            'news_name' => $name,
-//            'category_id' => $category,
-//            'news_body' => $news_bod,
-//            'title_image' => $title_image,
-//            'show_amount' => 0 ,
-//            'analitic' => $analitic
-//        ]);
-//
-//    }
-//
 
 }

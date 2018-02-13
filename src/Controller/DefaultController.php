@@ -29,8 +29,6 @@ class DefaultController extends BaseController
         $top_five_users_by_comments = $this->getRepository('user')->topFiveUsersByComments();
         $top_tree_discussion_news = $this->getRepository('news')->topTreeDiscussionNews();
 
-
-
         return $this->render('index.html.twig',
             ['collectionNews' => $collection,
                 'lastFour' => $lastFour,

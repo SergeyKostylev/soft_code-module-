@@ -38,6 +38,10 @@
 
         <div id="topthreeNewsbody" class="card-body text-info" style="display: none">
 
+            {% if not topTreeDiscussionNews %}
+                <h5 class="card-title text-warning">За последние сутки никто не оставил комментариев</h5>
+            {% endif %}
+
             {% for news in topTreeDiscussionNews %}
 
                 <a href="{{ path('paper_show',{'id' : news.id}) }}">{{ news.name }}</a><br>

@@ -110,6 +110,11 @@ routing:
         controller: APIController
         action: dislikes
 
+    api_dispatch:
+        pattern: /api/dispatch
+        controller: APIController
+        action: dispatch
+
 
 #admin
 

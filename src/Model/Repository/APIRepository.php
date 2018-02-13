@@ -50,6 +50,15 @@ class APIRepository
 
     }
 
+    public function setDispatchEntry($email,$name)
+    {
+        $sth = $this->pdo->prepare('INSERT INTO dispatch (id, email, user_name) VALUES (NULL,:email , :userName );');
+
+        $sth->execute([
+            'email' => $email,
+            'userName' => $name
+        ]);
+    }
 
 
 

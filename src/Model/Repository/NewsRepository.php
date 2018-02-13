@@ -18,7 +18,7 @@ class NewsRepository
 
 
 
-    public function add($name,$category,$news_bod,$title_image, $analitic)
+    public function add($id,$name,$category,$news_bod,$title_image, $analitic)
     {
 
         $sth = $this->pdo->prepare('INSERT INTO `news` (
@@ -30,8 +30,9 @@ class NewsRepository
                                     `create_data`,
                                     `show_amount`,
                                     `analitic`)
-                                    VALUES (NULL, :news_name, :category_id, :news_body, :title_image, CURRENT_TIMESTAMP, :show_amount, :analitic);');
+                                    VALUES (:id, :news_name, :category_id, :news_body, :title_image, CURRENT_TIMESTAMP, :show_amount, :analitic);');
         $sth->execute([
+            'id' =>$id,
             'news_name' => $name,
             'category_id' => $category,
             'news_body' => $news_bod,
@@ -41,6 +42,24 @@ class NewsRepository
         ]);
 
     }
+    public function getNewIdOfNews()
+    {
+        $sth = $this->pdo->query('SELECT MAX(id) FROM news;');
+        $res = $sth->fetch(\PDO::FETCH_ASSOC);
+        $value= (int)$res['MAX(id)'];
+        $value++;
+        return $value;
+
+    }
+
+
+    public function setTagForNews($news_is, $tag_id)
+    {
+        $sth = $this->pdo->query('INSERT INTO news_tag (news_id, tag_id) VALUES (' . $news_is .',' . $tag_id . ');');
+    }
+
+
+
 
     public function analiticNews(array $options = [], $hydrationArray = false)
     {

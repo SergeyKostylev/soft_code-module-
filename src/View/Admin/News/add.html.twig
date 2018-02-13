@@ -7,11 +7,11 @@
     <form method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label>Зашоловок:</label>
-            <input class="form-control" type="text" name="name" placeholder="Name:"/>
+            <input class="form-control" type="text" name="name" placeholder="Заголовок . . ."/>
         </div>
         <div class="form-group">
             <label>Текст статьи:</label>
-            <textarea  class="form-control height-330px" name="news_body" placeholder="News bod:"></textarea>
+            <textarea  class="form-control height-330px" name="news_body" placeholder="Текст новости . . ."></textarea>
         </div>
             <div class="form-group">
                 <label for="inputCity">Категория:</label>
@@ -21,6 +21,12 @@
                     {% endfor %}
                 </select>
             </div>
+        <div class="form-group">
+            <label for="inputCity">Теги:</label>
+            <input class="form-control" type="text" name="tags" placeholder="Теги . . .">
+            <small class="form-text text-muted"><b>Примечание:</b> Перечислите теги через запятую( первый, второй, третий ... ).
+                Если тег с таким название уже существует, то дубликат в БД создаваться небудет.</small>
+        </div>
             <div class="form-group">
                 <input type="checkbox" name="analitic"> Аналитическая статья вкл/выкл
             </div>
@@ -28,7 +34,7 @@
             {#<input type="text" name="tegs"> Аналитическая статья вкл/выкл#}
         {#</div>#}
         <div class="form-group">
-            <label>Титульное изображение(JPG):</label>
+            <label>Титульное изображение(JPG 1366 х 768):</label>
             <input type="file" class="form-control" id="file" name="titleimage">
         </div>
         <input class="btn btn-primary" type="submit" name="submit"/>
@@ -54,37 +60,6 @@
 
 {% endblock %}
 
-
-
-
-{#<form method="post" enctype="multipart/form-data">#}
-
-
-
-
-
-
-    {#<div class="form-group">#}
-        {#<input class="form-control" type="text" name="name" placeholder="Name:"/>#}
-        {#<input class="form-control" type="text" name="title_image" placeholder="Title_image:"/>#}
-        {#<textarea  class="form-control" name="news_body" placeholder="News bod:"></textarea>#}
-        {#<p>Category#}
-            {#<select  class="form-control" name="category">#}
-                {#{%  for category in categories  %}#}
-
-                    {#<option value="{{ category.getId }}"> {{ category.getName }} </option>#}
-                {#{% endfor %}#}
-            {#</select>#}
-        {#</p>#}
-        {#<input type="file" class="form-control" id="file" name="attachment">#}
-        {#<input type="checkbox" name="analitic">#}
-        {#<input class="btn btn-primary" type="submit" name="submit"/>#}
-
-
-
-    {#</div>#}
-
-{#</form>#}
 
 
 

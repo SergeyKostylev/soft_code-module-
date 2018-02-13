@@ -29,6 +29,21 @@ class APIController extends BaseController
 
     }
 
+//       /api/dispatch
+
+    public function dispatch(Request $request)
+    {
+
+        $email = $request->post('email');
+        $name = $request->post('name');
+        $this->getRepository('api')->setDispatchEntry($email,$name);
+
+    }
+
+
+
+
+
 
     public function addComment(Request $request )
     {

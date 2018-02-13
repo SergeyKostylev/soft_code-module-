@@ -144,14 +144,6 @@ var $addComment = $('.add-comment-button');
 
 
 
-
-
-
-
-
-
-
-
     setTimeout(function () {
         $('.add-category-message').fadeOut(390)
     }, 2100);
@@ -241,10 +233,14 @@ var $addComment = $('.add-comment-button');
     $pagination.children().filter( ':first , :last' ).remove();
     $pagination.removeClass('disp-none');
     var $bitweenbutton = $pagination.children().not( ':first , :last' );
-    $bitweenbutton.toggle();
     var $template = $('.page-item-template');
     var $treepointButton = $template.clone();
+    var $length = $pagination.children().length;
+    console.log($length);
+    if ($length !== 2){
+    $bitweenbutton.toggle();
     $treepointButton.removeClass('disp-none');
+    }
     $pagination.children().filter( ':first').after($treepointButton);
     $treepointButton.on('click', function () {
         $treepointButton.remove();
@@ -252,7 +248,34 @@ var $addComment = $('.add-comment-button');
     });
 
 
+    var $closeGreenWindows = $('.close-green-windows');
+    var $subscriptionBox = $('#subscription-box');
 
+    setTimeout(function () {
+        $subscriptionBox.fadeIn(390)
+    }, 15000);
+
+    $closeGreenWindows.on('click',function () {
+        $subscriptionBox.fadeOut(500);
+    });
+
+    var $iNeedThis = $('.i-need-this');
+    var $inputGreenWindowsE = $('.input-green-windows-E');
+    var $inputGreenWindowsF = $('.input-green-windows-F');
+    $iNeedThis.on('click', function () {
+
+        if(!$inputGreenWindowsE.val() || !$inputGreenWindowsF.val()){
+          alert("Укажите данные");
+        }else{
+            $.post('/api/dispatch',{
+                email : $inputGreenWindowsF.val(),
+                name : $inputGreenWindowsE.val()
+            },'json');
+            setTimeout(function () {
+                $subscriptionBox.fadeOut(900)
+            }, 100);
+        }
+    });
 
 
     $('#search-field').keydown(function(event){
