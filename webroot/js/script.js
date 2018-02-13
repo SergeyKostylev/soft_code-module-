@@ -1,5 +1,32 @@
 $(document).ready(function () {
 
+    // window.onbeforeunload = function (e) {
+    //     var e = e || window.event;
+    //     var myMessage= "Если вы закроете страницу сейчас, то она закроется";
+    //     if (e)
+    //     {
+    //         e.returnValue = myMessage;
+    //     }
+    //     return myMessage;
+    // };
+
+// ВКЛЮЧИТЬ
+// var $allamount = $('#allAmount');
+// var $shownow =$('#showNow');
+//     setInterval(function() {
+//         var $rand =Math.floor( (Math.random() * 4)+1 );
+//         $shownow.text($rand);
+//         var $newsId = $('#newsid');
+//         var $id = $newsId.data('newsid');
+//         var $showing =$shownow.text();
+//         $.get('/showamount/' + $id +'/' + $showing, function(r) {
+//             $allamount.text(r['amount']);
+//         });
+//     }, 3000);
+
+
+
+
 var $topfivebutton = $('#topfivebutton');
 var $topfivebody = $('#topfivebody');
 
@@ -17,7 +44,7 @@ var $addComment = $('.add-comment-button');
         var $blokOk = $('.get-message-ok');
         var $commentForm = $('.comment-form');
 
-        if($comment.length < 30){
+        if($comment.length < 20){
             alert('Слишком короткий комментарий');
         }
         else {
@@ -33,6 +60,118 @@ var $addComment = $('.add-comment-button');
 
         }
     });
+
+
+
+    var $likesButton = $('.likes-button');
+
+    $likesButton.on('click', function () {
+        var $this =$(this);
+        var $commentId = $this.siblings().filter('.comment-id').text();
+        var $footerMessage = $('#footer');
+        $.post('/api/likes',{
+            commentid : $commentId
+        },'json')
+            .done(function (r) {
+                var $likesAmount = r.likes;
+                var $disLikesAmount = r.dislikes;
+                $footerMessage.text(r.answer);
+                $footerMessage.fadeIn(210);
+                setTimeout(function () {
+                    $footerMessage.fadeOut(390)
+                }, 1200);
+                $this.siblings().filter('.likes-field').text(r.likes);
+                $this.siblings().filter('.dislikes-field').text(r.dislikes);
+            })
+            .fail(function (r) {
+                $footerMessage.text(r.answer);
+                $footerMessage.fadeIn(210);
+                setTimeout(function () {
+                    $footerMessage.fadeOut(390)
+                }, 1200);
+            })
+        ;
+    });
+
+
+    var $dislikesButton = $('.dislikes-button');
+
+    $dislikesButton.on('click', function () {
+        var $this =$(this);
+        var $commentId = $this.siblings().filter('.comment-id').text();
+        var $footerMessage = $('#footer');
+        $.post('/api/dislikes',{
+            commentid : $commentId
+        },'json')
+            .done(function (r) {
+                var $likesAmount = r.likes;
+                var $disLikesAmount = r.dislikes;
+                $footerMessage.text(r.answer);
+                $footerMessage.fadeIn(210);
+                setTimeout(function () {
+                    $footerMessage.fadeOut(390)
+                }, 1200);
+
+                $this.siblings().filter('.likes-field').text(r.likes);
+                $this.siblings().filter('.dislikes-field').text(r.dislikes);
+            })
+            .fail(function (r) {
+                $footerMessage.text(r.answer);
+                $footerMessage.fadeIn(210);
+                setTimeout(function () {
+                    $footerMessage.fadeOut(390)
+                }, 1200);
+            })
+        ;
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+    setTimeout(function () {
+        $('.add-category-message').fadeOut(390)
+    }, 2100);
+
+    var $invisibleCardButton = $('.invisible-card-button');
+    $invisibleCardButton.on('click', function () {
+        var $invisibleCardBody = $('.invisible-card-body');
+        $invisibleCardBody.toggle(700);
+    });
+
+    var $visibleCardButton = $('.visible-card-button');
+    $visibleCardButton.on('click', function () {
+        var $visibleCardBody = $('.visible-card-body');
+        $visibleCardBody.toggle(700);
+    });
+
+
+     resolutionComment = function () {
+        var $approval = $('.approval-button');
+        var $this = $(this);
+        var $commentId = $this.siblings().filter('.comment-id').text();
+        var $commentBody = $this.siblings().filter('.form-of-comment').children(":last").val();
+        $this.parent().toggle(700);
+        setTimeout(function () {
+            $this.parent().remove();
+        }, 5000);
+            $.post('/api/applause',{
+                commentid : $commentId,
+                commentbody : $commentBody
+            },'json');
+    };
+
+    $('.comment-block').on('click', '.approval-button' ,resolutionComment);
+
+
+
 
 
     var $serch = $('#serch-button');
@@ -78,19 +217,7 @@ var $addComment = $('.add-comment-button');
     });
 
 
-    
-var $allamount = $('#allAmount');
-var $shownow =$('#showNow');
-    setInterval(function() {
-        var $rand =Math.floor( (Math.random() * 4)+1 );
-        $shownow.text($rand);
-        var $newsId = $('#newsid');
-        var $id = $newsId.data('newsid');
-        var $showing =$shownow.text();
-        $.get('/showamount/' + $id +'/' + $showing, function(r) {
-            $allamount.text(r['amount']);
-        });
-    }, 3000);
+
 
 
     var $pagination =$('.pagination');
@@ -121,6 +248,14 @@ var $shownow =$('#showNow');
 
 
 
+    var $openSiteGroupButton = $('#open-site-group-button');
+    var $dropdownMenu =$('.dropdown-menu');
+    $openSiteGroupButton.on('click', function () {
+        var $serchSiteGroup = $('#serch-site-group');
+        $serchSiteGroup.toggle(300);
+        $dropdownMenu.fadeIn();
+
+    });
 
 
 
@@ -200,6 +335,11 @@ var $shownow =$('#showNow');
             slideNow--;
         }
     }
+
+
+
+
+
 
 
 });

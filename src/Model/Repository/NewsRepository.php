@@ -3,6 +3,7 @@
 namespace Model\Repository;
 
 use Framework\Session;
+use Model\Entity\Comment;
 use Model\Entity\News;
 use Model\Entity\Tag;
 
@@ -235,7 +236,7 @@ class NewsRepository
         $news_body = $res['news_body'];
         $prepareText='';
         $sentences_array =preg_split("/[.?!] |[.?!]|\.{3,}/", $news_body);
-        $sentences_array = array_splice($sentences_array,0,3);
+        $sentences_array = array_splice($sentences_array,0,5);
 
         foreach ($sentences_array as $item){
             $prepareText.= $item . '. ';

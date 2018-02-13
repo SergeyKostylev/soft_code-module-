@@ -88,18 +88,54 @@ routing:
         controller: APIController
         action: search
 
+
+    api_applause:
+        pattern: /api/applause
+        controller: APIController
+        action: applause
+
+    api_likes:
+        pattern: /api/likes
+        controller: APIController
+        action: likes
+
+    api_dislikes:
+        pattern: /api/dislikes
+        controller: APIController
+        action: dislikes
+
+
 #admin
-    admin_news_add:
-        access : admin
-        pattern: /admin/add/news
-        controller: Admin\NewsController
-        action: addAction
 
     admin_home:
         access : admin
         pattern: /admin
         controller: Admin\DefaultController
         action: indexAction
+
+    admin_news_add:
+        access : admin
+        pattern: /admin/add/news
+        controller: Admin\NewsController
+        action: addAction
+
+    admin_permit_news:
+        access : admin
+        pattern: /admin/permit
+        controller: Admin\CommentController
+        action: allCommentsAction
+
+    admin_catrgory_add:
+        access : admin
+        pattern: /admin/add/catrgory
+        controller: Admin\CategoryController
+        action: addAction
+
+
+
+
+
+
 
 
 #    admin_book_edit:

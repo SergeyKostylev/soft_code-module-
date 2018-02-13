@@ -1,0 +1,62 @@
+{% extends'admin_layout.html.twig' %}
+
+{% block content %}
+
+
+<div class="comment-block bg-secondary pading15 border-radius5">
+    <div class="card text-white bg-warning mb-3">
+        <div class="card-header">
+            <h3>Не одобренные комментарии </h3>
+            <button type="button" class="invisible-card-button btn btn-sm btn-primary float-right margin-top-39px">Показать/скрыть</button>
+        </div>
+        {% for comment in commentsInvisible %}
+            <div class="bg-secondary card-body invisible-card-body" style="display: none">
+                <form class="form-of-comment">
+                    <h5 class="text-dark">
+                        {% for key, user in users %}
+                            {% if key == comment.userId %}
+                                {{ user }}
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <textarea  class="form-control comment-body">{{ comment.body }}</textarea>
+                </form>
+                <span class="disp-none comment-id">{{ comment.id }}</span>
+                <button class="btn btn-success approval-button margin-top9px" type="button">Одобрить</button>
+                <hr>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    <hr class="border-white">
+
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header">
+            <h3>Видимые комментарии</h3>
+            <button type="button" class="visible-card-button btn btn-sm btn-success float-right margin-top-39px">Показать/скрыть</button>
+        </div>
+        {% for comment in commentsVisible %}
+            <div class="bg-secondary card-body visible-card-body" style="display: none">
+                <form class="form-of-comment">
+                    <h5 class="text-dark">
+                        {% for key, user in users %}
+                            {% if key == comment.userId %}
+                                {{ user }}
+                            {% endif %}
+                        {% endfor %}
+                    </h5>
+                    <textarea  class="form-control comment-body">{{ comment.body }}</textarea>
+                </form>
+                <span class="disp-none comment-id">{{ comment.id }}</span>
+                <button class="btn btn-success approval-button margin-top9px" type="button">Изменить</button>
+                <hr>
+            </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+<hr>
+
+{% endblock %}

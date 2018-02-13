@@ -109,4 +109,20 @@ class UserRepository
     }
 
 
+    public function findMasAll()
+    {
+        $sql='SELECT * FROM user';
+        $sth = $this->pdo->query($sql);
+        $users= [];
+        while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
+            $users[$res['id']] = $res['email'];
+        }
+        return $users;
+
+
+    }
+
+
+
+
 }

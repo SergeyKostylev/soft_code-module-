@@ -68,8 +68,6 @@ class NewsController extends BaseController
 
         $count = $repo->countTagNews($tag_id);
 
-
-
         $news = $repo
             ->newsDyTag
             ($tag_id,
@@ -90,27 +88,6 @@ class NewsController extends BaseController
             'pagination' => $pagination
         ]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     public function paperShowAction(Request $request)
@@ -121,11 +98,15 @@ class NewsController extends BaseController
             throw new \Exception('Новость не найдена');
         }
         $category = $this->getRepository('category')->findByID($news->getCategoryId());
+        $comments = $this->getRepository('comment')->findById($paper_id);
+        $users = $this->getRepository('user')->findMasAll();
 
         return $this->
             render('show.html.twig', [
             'news' => $news,
-            'category' => $category
+            'category' => $category,
+            'comments' => $comments,
+            'users' => $users
             ]);
 
 

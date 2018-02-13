@@ -12,18 +12,26 @@ class Comment
     private $likes;
     private $dislikes;
     private $date;
+    private $user_name;
 
-    public function __construct($id, $news_id, $user_id, $body, $allow_show, $likes, $dislikes, $date)
+
+
+    /**
+     * @return mixed
+     */
+    public function getUserName()
     {
-        $this->id = $id;
-        $this->news_id = $news_id;
-        $this->user_id = $user_id;
-        $this->body = $body;
-        $this->allow_show = $allow_show;
-        $this->likes = $likes;
-        $this->dislikes = $dislikes;
-        $this->date = $date;
+        return $this->user_name;
     }
+
+    /**
+     * @param mixed $user_name
+     */
+    public function setUserName($user_name)
+    {
+        $this->user_name = $user_name;
+    }
+
 
     /**
      * @return mixed

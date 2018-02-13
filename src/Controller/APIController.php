@@ -5,8 +5,6 @@ namespace Controller;
 use Framework\BaseController;
 use Framework\Request;
 use Framework\Session;
-use GuzzleHttp\Client;
-use Model\Entity\User;
 
 class APIController extends BaseController
 {
@@ -66,7 +64,6 @@ class APIController extends BaseController
             $ids[] = $teg->getId();
             $tagword [] =  $teg->getWord();
         }
-//        dump($collection);
         header('Content-type: application/json');
 
         return json_encode([
@@ -77,5 +74,181 @@ class APIController extends BaseController
 
     }
 
+    public function applause(Request $request)
+    {
+        $idComment = $request->post('commentid');
+        $CommentBody = $request->post('commentbody');
+        $this->getRepository('api')->applauseComment($idComment,$CommentBody);
+
+    }
+//      /api/likes
+    public function likes(Request $request)
+    {
+        if ( !Session::get('user')){
+            http_response_code(201);
+            header('Content-type: application/json');
+            return json_encode([
+                'answer' => "Вы не вошли в аккаунт"
+            ]);
+        }
+        $user_email = Session::get('user');
+        $user = $this->getRepository('user')->getUserByEmail($user_email);
+        $user_id = $user->getId();
+        $comment_id = $request->post('commentid');
+        $sense = $this->getRepository('comment')->getMark($user_id, $comment_id);
+
+        $comment = $this->getRepository('comment')->findCommentById($comment_id);
+
+        $likes_amount = $comment->getLikes();
+        $dislikes_amount = $comment->getDislikes();
+
+//        dump($sense);die;
+
+        if($sense == null){
+            $mark = 1;
+            $this->getRepository('comment')->insertMark($user_id,$comment_id,$mark);     //   РАСКОММЕНТИРОВАТЬ
+            $likes_amount++;
+            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);    //  РАСКОММЕНТИРОВАТЬ
+            http_response_code(200);
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы поставили лайк"
+            ]);
+        }
+        if($sense == 0){
+            $mark = 1;
+            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $likes_amount++;
+            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            http_response_code(200);
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы поставили лайк"
+            ]);
+        }
+
+        if($sense == 1){
+            $mark = 0;
+            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $likes_amount--;
+            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы отменили свой лайк"
+            ]);
+        }
+        if($sense == -1){
+            $mark = 1;
+            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $likes_amount++;
+            $dislikes_amount--;
+            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            http_response_code(200);
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы отменили свой дизлайк и поставили лайк"
+            ]);
+        }
+    }
+
+
+
+
+
+
+
+//      /api/dislikes
+    public function dislikes(Request $request)
+    {
+        if ( !Session::get('user')){
+            http_response_code(201);
+            header('Content-type: application/json');
+            return json_encode([
+                'answer' => "Вы не вошли в аккаунт"
+            ]);
+        }
+        $user_email = Session::get('user');
+        $user = $this->getRepository('user')->getUserByEmail($user_email);
+        $user_id = $user->getId();
+        $comment_id = $request->post('commentid');
+        $sense = $this->getRepository('comment')->getMark($user_id, $comment_id);
+
+        $comment = $this->getRepository('comment')->findCommentById($comment_id);
+
+        $likes_amount = $comment->getLikes();
+        $dislikes_amount = $comment->getDislikes();
+
+//                dump($sense);die;
+
+        if($sense == null){
+            $mark = -1;
+            $this->getRepository('comment')->insertMark($user_id,$comment_id,$mark);     //   РАСКОММЕНТИРОВАТЬ
+            $dislikes_amount++;
+            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);    //  РАСКОММЕНТИРОВАТЬ
+            http_response_code(200);
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы поставили дизлайк"
+            ]);
+        }
+        if($sense == 0){
+            $mark = -1;
+            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $dislikes_amount++;
+            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            http_response_code(200);
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы поставили дизлайк"
+            ]);
+        }
+        if($sense == 1){
+            $mark = -1;
+            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $likes_amount--;
+            $dislikes_amount++;
+            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы отменили свой лайк и поставили дизлайк"
+            ]);
+        }
+        if($sense == -1){
+            $mark = 0;
+            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $dislikes_amount--;
+            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            http_response_code(200);
+            header('Content-type: application/json');
+            return json_encode([
+                'likes' => $likes_amount,
+                'dislikes' => $dislikes_amount,
+                'answer' => "Вы отменили свой дизлайк"
+            ]);
+        }
+
+
+
+
+
+
+
+    }
 
 }

@@ -37,7 +37,7 @@
         </div>
         {%  if sessionGet('user')%}
 
-            <div class="bg-danger container comment-form">
+            <div class="container card border-info comment-form margin-top9px">
                 <form>
                     <div class="form-group">
                         <label>&#160;</label>
@@ -48,15 +48,43 @@
             </div>
 
         {% endif %}
-        <div class="bg-primary">
-            <div class="container">
-                &#160;&#160; Коментарии:
+        <div>
+
+            {% for comment in comments %}
+                <div class="card border-info mb-3 margin-top9px">
+                    <div class="card-header">
+                        {% for key, user in users %}
+                        {% if key == comment.userId %}
+                            {{ user }}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                <div class="card-body text-info">
+                    <p class="text-info"> {{ comment.body }}</p>
+                </div>
+                    <div>
+                        <i class="date-comment-in-news">{{ comment.date }}</i>
+                    </div>
+                    <div class="text-right margin-top-30px margin-right5px">
+                        <div class="comment-id disp-none">{{ comment.id }}</div>
+                        <button type="button" class="likes-button btn btn-link">Плюсануть</button>
+                        <span class="margin-lest-15px likes-field">{{ comment.likes }}</span>
+                        <button type="button" class="dislikes-button btn btn-link">Минусануть</button>
+                        <span class="margin-lest-15px dislikes-field">{{ comment.dislikes }}</span>
+                    </div>
             </div>
-        </div>
+            {% endfor %}
+
+         </div>
     </div>
 
 <br>
 <br>
+
+    <div id="footer" class="bg-info text-center font-medium" style="display: none">
+
+    </div>
+
 
 {% endblock %}
 

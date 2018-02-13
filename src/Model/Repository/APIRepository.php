@@ -39,6 +39,18 @@ class APIRepository
 
     }
 
+    public function applauseComment($idComment,$CommentBody)
+    {
+        $sth = $this->pdo->prepare('UPDATE comment SET body = :commentbody, allow_show  = 1 WHERE comment.id = :commentid;');
+
+        $sth->execute([
+            'commentbody' => $CommentBody,
+            'commentid' => $idComment
+        ]);
+
+    }
+
+
 
 
 }

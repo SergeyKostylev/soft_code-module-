@@ -1,0 +1,30 @@
+{% extends'admin_layout.html.twig' %}
+
+{% block content %}
+
+
+<h2>Создание категории</h2>
+
+    {%  if answer == 0 %}
+        <div class="add-category-message list-group-item list-group-item-action list-group-item-danger text-center border-radius5">
+            <h5>{{ getFlash() }}</h5>
+        </div>
+    {% endif %}
+    {%  if answer == 1 %}
+        <div class="add-category-message list-group-item list-group-item-action list-group-item-success text-center border-radius5">
+            <h5>{{ getFlash() }}</h5>
+        </div>
+    {% endif %}
+
+
+<hr>
+    <form method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Название:</label>
+            <input name="name" type="text" class="form-control" placeholder="Введите название новой категории...">
+            <small class="form-text text-muted"><b>Примечание:</b> Категория не будет отображаться пока у нее нет ни одной новости!</small>
+        </div>
+        <button type="submit" class="btn btn-success">Создать</button>
+    </form>
+
+{% endblock %}

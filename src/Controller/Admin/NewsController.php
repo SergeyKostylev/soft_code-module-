@@ -21,9 +21,7 @@ class NewsController extends BaseController
             $request->post('news_body'),
             $request->post('title_image'),
             $request->post('analitic')
-//            $request->getUpload('attachment')
         );
-
 
         if($request->isPost()){
             $analitic = (isset($_POST['analitic']))? 1 : 0;
@@ -36,16 +34,7 @@ class NewsController extends BaseController
                     new \Upload\Validation\Mimetype('image/jpeg'),
                     new \Upload\Validation\Size('15M')
                 ));
-
-//                try {
                     $file->upload();
-//                } catch (\Exception $e) {
-//                    $errors = $file->getErrors();
-//                }
-
-
-
-
                 $this->getRepository('news')->add(
                     $form->getName(),
                     $form->getCategory(),
@@ -54,28 +43,16 @@ class NewsController extends BaseController
                     $analitic
 
                 );
-
-
-
-
-
+                return $this->getRouter()->redirect('admin_news_add');
             }
 
         }
         $categories= $this->getRepository('category')->findAll();
 
-
         return $this->render('add.html.twig',
             ['categories' => $categories,
             ]);
     }
-
-//    public function newsByCategoryAction(Request $request )
-//    {
-//        $category_id = $request->get('id');
-//        $news = $this->getRepository('News')->newsDyCategory($category_id);
-//        dump($news)
-//    }
 
 
 

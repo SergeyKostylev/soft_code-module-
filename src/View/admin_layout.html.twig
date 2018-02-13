@@ -8,7 +8,7 @@
     <title>ADMIN</title>
     <link rel="stylesheet" href="/webroot/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webroot/css/style.css">
-    <script src="/webroot/js/bootstrap.min.js"></script>
+    {#<script src="/webroot/js/bootstrap.min.js"></script>#}
 </head>
 <body>
 
@@ -24,10 +24,10 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('admin_home')}}">Главная страница админа </a>
             </li>
-            <li class="nav-item">
-                <a  class="nav-link " href="{{ path('admin_news_add') }}">Создать Новость</a>
-            </li>
 
+            {#<li class="nav-item">#}
+                {#<a  class="nav-link " href="">Комментарии ожидающие подтверждения</a>#}
+            {#</li>#}
 
         </ul>
         <div class="nav-item dropdown">
@@ -52,26 +52,58 @@
 
 
 
-<h1>ADMIN</h1>
-
-
-    
+<h1 class="text-center">Меню Администратора</h1>
     <hr>
 
-
-<div class="container">
-
-
-    {% block content %}{% endblock %}
+<div class="container-fluid">
 
 
+    <div class="row">
+        <div class="col-md-2">
+
+            <div class="btn-group-vertical width100">
+                <a class="btn btn-secondary" href="{{ path('admin_news_add') }}">Создать новость</a>
+                <a class="btn btn-secondary" href="{{ path('admin_catrgory_add') }}">Добавить категорию</a>
+                {#<div class="btn-group" role="group">#}
+                    {#<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+                        {#Dropdown#}
+                    {#</button>#}
+                    {#<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">#}
+                        {#<a class="dropdown-item" href="#">Dropdown link</a>#}
+                        {#<a class="dropdown-item" href="#">Dropdown link</a>#}
+                    {#</div>#}
+                {#</div>#}
+                <a class="btn btn-secondary " href="{{ path('admin_permit_news') }}">Комментарии</a>
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="col-md-8 ">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+        <div class="col-md-2">
+        </div>
+
+
+    </div>
 </div>
 
 </body>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="/webroot/js/script.js"></script>
 
 </html>

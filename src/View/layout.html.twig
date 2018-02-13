@@ -36,19 +36,31 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('homepage') }}">Главная</a>
             </li>
+
+
+            {#<li class="nav-item dropdown show">#}
+                {#<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="true">Поисковики&#160;&#160;<span class="caret"></span></a>#}
+                {#<div class="dropdown-menu" aria-labelledby="download">#}
+                    {#<a id="open-site-group-button" class="dropdown-item dropdown-toggle">Открыть Здесь</a>#}
+                    {#<div id="serch-site-group" style="display: none">#}
+                        {#<div class="dropdown-divider"></div>#}
+                        {#<a class="dropdown-item" href="https://www.google.com/">Google.com</a>#}
+                        {#<a class="dropdown-item" href="https://www.yahoo.com/">Yahoo</a>#}
+                        {#<a class="dropdown-item" href="https://meta.ua/">Meta.ua</a>#}
+                    {#</div>#}
+                    {#<div class="dropdown-divider"></div>#}
+                    {#<a class="dropdown-item" href="#">bootstrap.min.css</a>#}
+                {#</div>#}
+            {#</li>#}
+
+
             <li class="nav-item">
                 <form class="form-inline ">
                     <input id="search-field" class="form-control" name="search" autocomplete="off" type="text" placeholder="Поиск:" list="teg-list">
                 </form>
-
                 <div id="lowp-field" class="bg-white my-form-control float-left serch-imput" style="display: none">
-
-
                 </div>
             </li>
-            {#<li class="nav-item">#}
-                {#<button type="button" id="serch-button" class="btn btn-success">Проба</button>#}
-            {#</li>#}
         </ul>
 
         {% if sessionGet('user') %}
@@ -90,32 +102,59 @@
     </div>
 </nav>
 
-
 <div class="container-fluid">
+
+
     <div class="row">
         <div class="col-md-2">
 
+            <div class="bg-my-blue blurb-form">
+                <div class="blurb-item  font-medium">PORSCH 911</div>
+                <div class="blurb-saler text-warning "><legend>AvtoLog</legend></div>
+                <div class="blub-price "><b>100000</b><span>&#160;$</span></div>
+                <div class="blurb-diskon ">Скидка:<br>1NGN3RE<br><span class="">примените при покупке</span></div>
+            </div>
+            <div class="bg-my-soft-rad blurb-form">
+                <div class="blurb-item">ТОВАР</div>
+                <div class="blurb-saler">Продавец</div>
+                <div class="blub-price">Цена</div>
+                <div class="blurb-diskon">Скидка</div>
+            </div>
+            <div class="bg-my-soft-green blurb-form">
+                <div class="blurb-item">ТОВАР</div>
+                <div class="blurb-saler">Продавец</div>
+                <div class="blub-price">Цена</div>
+                <div class="blurb-diskon">Скидка</div>
+            </div>
+            <div class="bg-my-soft-grey blurb-form">
+                <div class="blurb-item">ТОВАР</div>
+                <div class="blurb-saler">Продавец</div>
+                <div class="blub-price">Цена</div>
+                <div class="blurb-diskon">Скидка</div>
+            </div>
+
         </div>
+
+
 
         <div class="col-md-8 ">
 
             {% block baner %}{% endblock %}
             {% block content %}{% endblock %}
 
-
         </div>
 
         <div class="col-md-2">
 
+
+
         </div>
+
+
     </div>
 </div>
 
-
-
 </body>
-
-{#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>#}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>

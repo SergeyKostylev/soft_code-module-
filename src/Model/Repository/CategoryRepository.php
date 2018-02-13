@@ -14,6 +14,16 @@ class CategoryRepository
         $this->pdo = $pdo;
     }
 
+    public function add($category_name)
+    {
+        $sth = $this->pdo->prepare('INSERT INTO category (id, name) VALUES (NULL, :nameCategory);');
+        $sth->execute([
+            'nameCategory' => $category_name
+        ]);
+
+    }
+
+
     public function findAll()
     {
         $collection=[];
@@ -44,6 +54,8 @@ class CategoryRepository
 
         return $category;
     }
+
+
 
 
 
