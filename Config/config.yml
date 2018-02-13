@@ -65,6 +65,12 @@ routing:
         parameters:
             id: '[0-9]+'
 
+    user_comment:
+        pattern: /user/{id}/comment
+        controller: CommentController
+        action: indexAction
+        parameters:
+            id: '[0-9]+'
 
 #API
 

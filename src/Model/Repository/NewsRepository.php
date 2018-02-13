@@ -260,6 +260,49 @@ class NewsRepository
 
     }
 
+    public function topTreeDiscussionNews()
+    {
+
+        $collection=[];
+
+        $sth = $this->pdo->query('SELECT
+                                        n.id,
+                                        n.name,
+                                        n.category_id,
+                                        n.news_body,
+                                        n.title_image,
+                                        n.create_data,
+                                        n.show_amount,
+                                        n.analitic,
+                                        COUNT(c.id) as count FROM news n
+                                        JOIN comment c ON c.news_id = n.id
+                                        WHERE c.date >= CURRENT_DATE - INTERVAL 1 DAY
+                                        GROUP BY n.id 
+                                        ORDER BY count DESC
+                                        LIMIT 3; ');
+
+        while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
+            $news =(new News())
+                ->setId($res['id'])
+                ->setName($res['name'])
+                ->setCategoryId($res['category_id'])
+                ->setNewsBody($res['news_body'])
+                ->setTitleImage($res['title_image'])
+                ->setCreteDate($res['create_data'])
+                ->setShowAmount($res['show_amount'])
+                ->setAnalitic($res['analitic'])
+            ;
+            $collection[]=$news;
+        }
+        return $collection;
+
+    }
+
+
+
+
+
+
     public function count($category_id)
     {
         $sth = $this->pdo->prepare('select count(*) as count from news WHERE category_id= :id');

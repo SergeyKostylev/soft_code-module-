@@ -29,6 +29,50 @@
 {% block content %}
 
 
+    <div class="card text-white  border-info mb-3">
+        <div class="card-header">
+            <div class="float-left"><legend>Топ 3 обсуждаемых тем за сутки</legend>
+            </div>
+            <button id="toptreeNewsbutton" type="button" class="btn btn-sm btn-primary  float-right">Показать/скрыть</button>
+        </div>
+
+        <div id="topthreeNewsbody" class="card-body text-info" style="display: none">
+
+            {% for news in topTreeDiscussionNews %}
+
+                <a href="{{ path('paper_show',{'id' : news.id}) }}">{{ news.name }}</a><br>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="card text-white  border-info mb-3">
+        <div class="card-header">
+            <div class="float-left"><legend>Топ 5 комментаторов</legend>
+            </div>
+            <button id="topfiveUserbutton" type="button" class="btn btn-sm btn-primary  float-right">Показать/скрыть</button>
+        </div>
+
+        <div id="topfiveUserbody" class="card-body text-info" style="display: none">
+
+            {% for key,user in topFiveUsersByComment %}
+
+                <a href="{{ path('user_comment',{'id' : key}) }}">{{ user }}</a><br>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+
+
     <div class=" card text-white  border-info mb-3">
         <div class="card-header">
             <div class="float-left"><legend>Пять послених новостей на все темы</legend>

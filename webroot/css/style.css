@@ -29,6 +29,11 @@
 {
   margin-top: 9px;
 }
+.margin-top12px
+{
+  margin-top: 12px;
+}
+
 .margin-top-39px
 {
   margin-top: -39px;
@@ -54,6 +59,7 @@
   opacity: 0.9;
   width: 50%;
   border-radius: 10px;
+  z-index: 9;
 }
 
 

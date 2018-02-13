@@ -121,6 +121,21 @@ class UserRepository
 
 
     }
+    public function topFiveUsersByComments()
+    {
+        $sql='SELECT u.id, u.email, COUNT(c.id) 
+                                            as count From user u
+                                            JOIN comment c ON c.user_id =u.id 
+                                            GROUP BY u.id ORDER BY count DESC LIMIT 5;';
+        $sth = $this->pdo->query($sql);
+        $users= [];
+        while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
+            $users[$res['id']] = $res['email'];
+        }
+        return $users;
+
+
+    }
 
 
 

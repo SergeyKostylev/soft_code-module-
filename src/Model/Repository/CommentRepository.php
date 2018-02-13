@@ -118,14 +118,6 @@ class CommentRepository
     }
 
 
-
-
-
-
-
-
-
-
     public function findById($news_id)
     {
         $collection =[];
@@ -150,6 +142,45 @@ class CommentRepository
         }
         return $collection;
     }
+
+
+    public function finbByUserID($user_id, array $options = [], $hydrationArray = false)
+    {
+        $limitSql = '';
+
+        if (isset($options['current_page']) && isset($options['items_on_page'])) {
+            $page = $options['current_page'] - 1;
+            $count = $page * $options['items_on_page'];
+            $limitSql = "limit {$count}, {$options['items_on_page']}";
+        }
+
+        $collection =[];
+        $sth = $this->pdo->prepare('SELECT * FROM comment WHERE user_id = :userId AND allow_show = 1 ORDER BY likes DESC '. $limitSql .';');
+        $sth->execute([
+            'userId' => $user_id
+        ]);
+
+        while ($res = $sth->fetch(\PDO::FETCH_ASSOC)){
+
+            $comment =(new Comment())
+                ->setId($res['id'])
+                ->setNewsId($res['news_id'])
+                ->setUserId($res['user_id'])
+                ->setBody($res['body'])
+                ->setAllowShow($res['allow_show'])
+                ->setLikes($res['likes'])
+                ->setDislikes($res['dislikes'])
+                ->setDate($res['date'])
+            ;
+            $collection[]=$comment;
+        }
+        return $collection;
+
+    }
+
+
+
+
 
     public function getMark($user_id, $comment_id)
     {
@@ -200,6 +231,17 @@ class CommentRepository
             'dislikesAmount' => $dislikes_amount,
             'commentId' => $comment_id,
         ]);
+    }
+
+
+    public function countUserComment($user_id)
+    {
+        $sth = $this->pdo->prepare('SELECT count(*) as count From comment WHERE user_id = :id');
+        $sth->execute([
+            'id' => $user_id
+        ]);
+
+        return $sth->fetchColumn();
     }
 
 

@@ -11,18 +11,18 @@ $(document).ready(function () {
     // };
 
 // ВКЛЮЧИТЬ
-// var $allamount = $('#allAmount');
-// var $shownow =$('#showNow');
-//     setInterval(function() {
-//         var $rand =Math.floor( (Math.random() * 4)+1 );
-//         $shownow.text($rand);
-//         var $newsId = $('#newsid');
-//         var $id = $newsId.data('newsid');
-//         var $showing =$shownow.text();
-//         $.get('/showamount/' + $id +'/' + $showing, function(r) {
-//             $allamount.text(r['amount']);
-//         });
-//     }, 3000);
+var $allamount = $('#allAmount');
+var $shownow =$('#showNow');
+    setInterval(function() {
+        var $rand =Math.floor( (Math.random() * 4)+1 );
+        $shownow.text($rand);
+        var $newsId = $('#newsid');
+        var $id = $newsId.data('newsid');
+        var $showing =$shownow.text();
+        $.get('/showamount/' + $id +'/' + $showing, function(r) {
+            $allamount.text(r['amount']);
+        });
+    }, 3000);
 
 
 
@@ -33,6 +33,22 @@ var $topfivebody = $('#topfivebody');
 $topfivebutton.on('click',function () {
    $topfivebody.toggle(300);
 });
+
+    var $topfiveUserbutton = $('#topfiveUserbutton');
+    var $topfiveUserbody = $('#topfiveUserbody');
+
+    $topfiveUserbutton.on('click',function () {
+        $topfiveUserbody.toggle(300);
+    });
+
+    var $toptreeNewsbutton = $('#toptreeNewsbutton');
+    var $toptreeNewsbody = $('#topthreeNewsbody');
+
+    $toptreeNewsbutton.on('click',function () {
+        $toptreeNewsbody.toggle(300);
+    });
+
+
 
 
 var $addComment = $('.add-comment-button');

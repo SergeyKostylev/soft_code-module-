@@ -1,0 +1,95 @@
+{% extends'layout.html.twig' %}
+
+{% block content %}
+
+
+    <div class="container">
+
+        <div>
+            <div class="float-left margin-top12px"><i>Комментарии>>пользователь>></i></div>
+            <h2>{{ user.email }}</h2>
+            <div>
+                Примечание: Неподтвержденные сообщения не отображаются!
+            </div>
+            {% if comments|length == 0 %}
+                <h2>Этот пользователь еще не оставлял комментарии...</h2>
+            {% endif %}
+            {% for comment in comments %}
+                <div class="card border-info mb-3 margin-top9px">
+                    <div class="card-header">
+                            {{ user.email }}
+                    </div>
+                <div class="card-body text-info">
+                    <p class="text-info"> {{ comment.body }}</p>
+                </div>
+                    <div>
+                        <i class="date-comment-in-news">{{ comment.date }}</i>
+                    </div>
+                    <div class="text-right margin-top-30px margin-right5px">
+                        <div class="comment-id disp-none">{{ comment.id }}</div>
+                        <button type="button" class="likes-button btn btn-link">Плюсануть</button>
+                        <span class="margin-lest-15px likes-field">{{ comment.likes }}</span>
+                        <button type="button" class="dislikes-button btn btn-link">Минусануть</button>
+                        <span class="margin-lest-15px dislikes-field">{{ comment.dislikes }}</span>
+                    </div>
+            </div>
+            {% endfor %}
+
+         </div>
+    </div>
+
+<br>
+
+    <li class="page-item active page-item-template disp-none">
+        <a class="page-link">...</a>
+    </li>
+
+    <div class="container">
+
+        <ul class="pagination pagination-lg disp-none justify-content-center">
+            {% for button in pagination %}
+                {% if button.isActive %}
+                    <li class="page-item active">
+                        <a class="page-link" href = '?page={{ button.page }}'>{{ button.text }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="#">{{ button.text }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+
+    <div id="footer" class="bg-info text-center font-medium" style="display: none">
+
+    </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

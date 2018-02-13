@@ -55,7 +55,7 @@
                     <div class="card-header">
                         {% for key, user in users %}
                         {% if key == comment.userId %}
-                            {{ user }}
+                            <a href="{{ path('user_comment',{'id' : comment.userId}) }}">{{ user }}</a>
                         {% endif %}
                         {% endfor %}
                     </div>

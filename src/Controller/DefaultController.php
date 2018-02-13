@@ -26,10 +26,16 @@ class DefaultController extends BaseController
             if (($new == null)){unset($collection[$key]);}
         }
 
+        $top_five_users_by_comments = $this->getRepository('user')->topFiveUsersByComments();
+        $top_tree_discussion_news = $this->getRepository('news')->topTreeDiscussionNews();
+
+
 
         return $this->render('index.html.twig',
             ['collectionNews' => $collection,
-                'lastFour' => $lastFour
+                'lastFour' => $lastFour,
+                'topFiveUsersByComment' => $top_five_users_by_comments,
+                'topTreeDiscussionNews' => $top_tree_discussion_news
             ]);
     }
 
