@@ -7,11 +7,7 @@
     <title>News</title>
     <link rel="stylesheet" href="/webroot/css/bootstrap.css">
     <link rel="stylesheet" href="/webroot/css/style.css">
-    <link rel="stylesheet" href="/webroot/css/fa-brands.css">
-    <link rel="stylesheet" href="/webroot/css/fontawesome.css">
-    <link rel="stylesheet" href="/webroot/css/fa-brands.css">
-    <link rel="stylesheet" href="/webroot/css/fa-regular.css">
-    <link rel="stylesheet" href="/webroot/css/fa-solid.css">
+    <link rel="stylesheet" href="../../webroot/css/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.min.css">
 
 </head>
 <body>
@@ -45,10 +41,10 @@
                     <li><a tabindex="-1" href="{{ path('news_by_category',{'id' :  1 }) }}">Политические новости</a></li>
                     <div class="dropdown-divider"></div>
                     <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Поисковики &#62; <span class="caret"></span></a>
+                        <a class="test" tabindex="-1" href="#">Поисковики&#160;&#160;&#160;&#160;&#160;&#160;&#160;<i class="fas fa-angle-right"></i> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="dropdown-submenu ">
-                                <a class="test" href="#">Google &#62;<span class="caret"></span></a>
+                                <a class="test" href="#">Google &#160;&#160;&#160;&#160;&#160;&#160;&#160;<i class="fas fa-angle-right"></i><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="https://www.google.com/">Google.com</a></li>
                                     <li><a href="https://www.google.com.ua/">Google.com.ua</a></li>
@@ -99,8 +95,8 @@
             </div>
             <form class="form-inline my-2 my-lg-0" method="post" action="{{ path('sign_in') }}">
 
-                <input class="form-control mr-sm-2" name="email" type="text" placeholder="Email:" value="admin@admin.com">
-                <input class="form-control mr-sm-2" name="password" type="password" placeholder="Password:" value="admin">
+                <input class="form-control mr-sm-2" name="email" type="text" placeholder="Email:">
+                <input class="form-control mr-sm-2" name="password" type="password" placeholder="Пароль:">
                 <button class="btn btn-success my-2 my-sm-0" type="submit">Войти</button>
             </form>
             <a class="btn btn-info my-2 my-sm-0" href="{{ path('registration') }}">Регистрация</a>        {% endif %}
@@ -110,7 +106,7 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-2 d-sm-none d-md-block">
+        <div class="col-md-2 d-none d-sm-none d-md-block">
 
             <div class="bg-my-blue blurb-form">
                 <span data-dickontprice="6300$"  class="dickontprice"></span>
@@ -156,7 +152,7 @@
 
         </div>
 
-        <div class="col-md-2 d-sm-none d-md-block">
+        <div class="col-md-2 d-none d-sm-none d-md-block">
 
             <div class="bg-my-soft-grey blurb-form">
                 <span data-dickontprice="200$" class="dickontprice"></span>

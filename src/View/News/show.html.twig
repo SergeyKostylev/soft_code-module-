@@ -59,15 +59,15 @@
                 <div class="card-body text-info">
                     <p class="text-info comment-body"></p>
                 </div>
-                <div>
-                    <i class="date-comment-in-news">  </i>
+                <div class="float-left margin-left11px">
+                    <i class="date-comment-in-news"></i>
                 </div>
                 <div class="text-right margin-top-30px margin-right5px">
                     <div class="comment-id disp-none"></div>
-                    <button type="button" class="likes-button btn btn-link">Плюсануть</button>
-                    <span class="margin-lest-15px likes-field">0</span>
-                    <button type="button" class="dislikes-button btn btn-link">Минусануть</button>
-                    <span class="margin-lest-15px dislikes-field">0</span>
+                    <button type="button" class="likes-button btn btn-link finger-up-font-size"><i class="far fa-thumbs-up"></i></button>
+                    <span class="margin-lest-15px font-medium likes-field">0</span>
+                    <button type="button" class="dislikes-button btn btn-link finger-down-font-size"><i class="far fa-thumbs-down"></i></button>
+                    <span class="margin-lest-15px font-medium dislikes-field">0</span>
                 </div>
             </div>
          {#TEMPLATE BLOCK END#}
@@ -88,15 +88,15 @@
                 <div class="card-body text-info">
                     <p class="text-info"> {{ comment.body }}</p>
                 </div>
-                    <div>
+                    <div class="float-left margin-left11px">
                         <i class="date-comment-in-news">{{ comment.date }}</i>
                     </div>
                     <div class="text-right margin-top-30px margin-right5px">
                         <div class="comment-id disp-none">{{ comment.id }}</div>
-                        <button type="button" class="likes-button btn btn-link">Плюсануть</button>
-                        <span class="margin-lest-15px likes-field">{{ comment.likes }}</span>
-                        <button type="button" class="dislikes-button btn btn-link">Минусануть</button>
-                        <span class="margin-lest-15px dislikes-field">{{ comment.dislikes }}</span>
+                        <button type="button" class="likes-button btn btn-link finger-up-font-size"><i class="far fa-thumbs-up"></i></button>
+                        <span class="margin-lest-15px font-medium likes-field">{{ comment.likes }}</span>
+                        <button type="button" class="dislikes-button btn btn-link finger-down-font-size"><i class="far fa-thumbs-down"></i></button>
+                        <span class="margin-lest-15px font-medium dislikes-field">{{ comment.dislikes }}</span>
                     </div>
             </div>
             {% endfor %}

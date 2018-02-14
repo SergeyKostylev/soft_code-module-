@@ -29,6 +29,11 @@
 {
   margin-top: 9px;
 }
+
+.margin-top21px
+{
+  margin-top: 21px;
+}
 .margin-top12px
 {
   margin-top: 12px;
@@ -197,10 +202,23 @@
 }
 
 
+.finger-up-font-size
+{
+  font-size: 25px;
+  margin-top: -12px;
+  color: #007bff;
+}
 
-
-
-
+.finger-down-font-size
+{
+  font-size: 25px;
+  margin-top: -7px;
+  color: #bd2130;
+}
+.margin-left11px
+{
+ margin-left:11px;
+}
 
 
 
