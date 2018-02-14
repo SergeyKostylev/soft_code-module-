@@ -9,10 +9,19 @@
     <link rel="stylesheet" href="/webroot/css/bootstrap.min.css">
     <link rel="stylesheet" href="/webroot/css/style.css">
     {#<script src="/webroot/js/bootstrap.min.js"></script>#}
+
+
+    {#<link rel="stylesheet" href="/webroot/css/fa-brands.css">#}
+    <link rel="stylesheet" href="/webroot/css/fontawesome.css">
+    {#<link rel="stylesheet" href="/webroot/css/fa-brands.css">#}
+    {#<link rel="stylesheet" href="/webroot/css/fa-regular.css">#}
+    {#<link rel="stylesheet" href="/webroot/css/fa-solid.css"Ю#}
+
+
+
 </head>
 <body>
 
-{#<nav class=" navbar navbar-expand-lg navbar-dark bg-dark fixed-top">#}
 <nav class=" navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,10 +33,6 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('admin_home')}}">Главная страница админа </a>
             </li>
-
-            {#<li class="nav-item">#}
-                {#<a  class="nav-link " href="">Комментарии ожидающие подтверждения</a>#}
-            {#</li>#}
 
         </ul>
         <div class="nav-item dropdown">
@@ -48,11 +53,7 @@
 </nav>
 
 
-
-
-
-
-<h1 class="text-center">Меню Администратора</h1>
+<h1 class="text-center"><i class="far fa-bell-slash"></i>Меню Администратора</h1>
     <hr>
 
 <div class="container-fluid">
@@ -64,24 +65,11 @@
             <div class="btn-group-vertical width100">
                 <a class="btn btn-secondary" href="{{ path('admin_news_add') }}">Создать новость</a>
                 <a class="btn btn-secondary" href="{{ path('admin_catrgory_add') }}">Добавить категорию</a>
-                {#<div class="btn-group" role="group">#}
-                    {#<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-                        {#Dropdown#}
-                    {#</button>#}
-                    {#<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">#}
-                        {#<a class="dropdown-item" href="#">Dropdown link</a>#}
-                        {#<a class="dropdown-item" href="#">Dropdown link</a>#}
-                    {#</div>#}
-                {#</div>#}
                 <a class="btn btn-secondary " href="{{ path('admin_permit_news') }}">Комментарии</a>
 
             </div>
 
-
-
         </div>
-
-
 
         <div class="col-md-8 ">
 

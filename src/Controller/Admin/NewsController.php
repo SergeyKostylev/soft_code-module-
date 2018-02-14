@@ -23,7 +23,8 @@ class NewsController extends BaseController
             $request->post('analitic')
         );
         $tags_str = $request->post('tags');
-        $word_collection = explode(", ", $tags_str);
+        preg_match_all("/[а-яА-Яa-zA-z]+/u", $tags_str, $word_collection);
+        $word_collection = $word_collection[0];
 
         if($request->isPost()){
             $analitic = (isset($_POST['analitic']))? 1 : 0;
@@ -69,14 +70,8 @@ class NewsController extends BaseController
                     $this->getRepository('news')->setTagForNews($id,$key);
 
                 }
-
-
-
-
-
                 return $this->getRouter()->redirect('admin_news_add');
             }
-
         }
         $categories= $this->getRepository('category')->findAll();
 
@@ -84,8 +79,5 @@ class NewsController extends BaseController
             ['categories' => $categories,
             ]);
     }
-
-
-
 
 }

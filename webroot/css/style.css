@@ -157,7 +157,7 @@
 
 .bg-my-soft-green
 {
-  background-color: #C5FFB0;
+  background-color: #0c5460;
   border-color: #00efb2;
 }
 
@@ -165,8 +165,64 @@
 {
   background-color: #879DB0;
   border-color: #524dbc;
-
 }
+
+.blub-price
+{
+  font-size: 33px;
+  color: white;
+  margin-top: -10px;
+  font-weight: bold;
+}
+
+
+.blurb-price-dick
+{
+  font-size: 36px;
+  margin-top: -10px;
+  color: red;
+  font-weight: bold;
+}
+
+.discont-firld
+{
+  border-top: 4px solid #007bff;
+  border-radius: 7px;
+  background-color: white;
+  color: #0a0909;
+}
+.discont-number
+{
+  font-size: 20px;
+}
+
+
+
+
+
+
+
+
+
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+}
+
+
+
+
+
+
+
+
+
+
 
 .serch-imput
 {
@@ -174,7 +230,7 @@
   height: auto;
   position: absolute;
   z-index: 9;
-  width: 300px;
+
 }
 
 .my-form-control {

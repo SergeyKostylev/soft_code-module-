@@ -261,7 +261,7 @@ class NewsRepository
             $prepareText.= $item . '. ';
          }
 
-         if (!(Session::get('user'))){
+         if (!(Session::get('user')) && $res['analitic'] == 1){
              $res['news_body'] = $prepareText;
         }
 

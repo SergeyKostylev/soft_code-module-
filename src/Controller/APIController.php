@@ -33,21 +33,24 @@ class APIController extends BaseController
 
     public function dispatch(Request $request)
     {
-
         $email = $request->post('email');
         $name = $request->post('name');
-        $this->getRepository('api')->setDispatchEntry($email,$name);
+        $duplicate = $this->getRepository('api')->checkDuplicateDispatchEntry($email);
 
+        if(!$duplicate){
+        $this->getRepository('api')->setDispatchEntry($email,$name);
+        }
     }
 
 
 
 
-
+///    /api/add/comment
 
     public function addComment(Request $request )
     {
         if (!Session::get('user')){
+            http_response_code(201);
             return null;
         }
         $news_id = $request->post('newsid');
@@ -58,12 +61,25 @@ class APIController extends BaseController
         if ($news_category == 1){
             $allow_show =0;
         }
-
         $user = $this->getRepository('user')->getUserByEmail(Session::get('user'));
         $comment_body = $request->post('commentbody');
 
+        $id = $this->getRepository('comment')->uploadComment($news_id,$user->getId(),$comment_body, $allow_show);
+        $comment = $this->getRepository('comment')->findCommentById($id);
 
-        $this->getRepository('comment')->uploadComment($news_id,$user->getId(),$comment_body, $allow_show);
+        $answer = [
+            'userId' => $user->getId(),
+            'userEmail' => $user->getEmail(),
+            'commentId' => $comment->getId(),
+            'commentBody' => $comment->getBody(),
+            'date' => $comment->getDate()
+        ];
+
+        http_response_code(200);
+        header('Content-type: application/json');
+        return json_encode($answer);
+
+
 
     }
 

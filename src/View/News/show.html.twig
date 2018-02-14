@@ -3,7 +3,7 @@
 {% block content %}
 
     <span data-newsid="{{ news.id }}" id="newsid"></span>
-
+    <span data-category="{{ news.categoryId }}" id="category"></span>
     <div class="container">
         <div class="margin-top9px"><i>Статьи&#62;&#62;{{ category.name }}</i></div>
         <h2>{{ news.name }}</h2>
@@ -20,7 +20,7 @@
         </div>
         <div class="bg-white text-dark ">
             {{ news.newsBody }}
-            {%  if not sessionGet('user') and  news.analitic %}
+            {%  if not sessionGet('user') and  news.analitic == 1 %}
                 <div class="text-danger font-normal">
                     <i>
                         &#160;&#160;Данная статья является Аналитикой.
@@ -32,8 +32,12 @@
 
 
         </div>
-        <div class="get-message-ok disp-none my-alert bg-success">
-            <strong><div class="text-center" style="margin-bottom: 0px">Прокоментировано!</div></strong>
+        <div class="get-message disp-none my-alert bg-success">
+            <strong>
+                <div class="text-center" style="margin-bottom: 0px">
+                    {#Прокоментировано!#}
+                </div>
+            </strong>
         </div>
         {%  if sessionGet('user')%}
 
@@ -47,8 +51,30 @@
                 </form>
             </div>
 
+        {#TEMPLATE BLOCK#}
+            <div class="card border-info mb-3 margin-top9px empty-block" style="display: none">
+                <div class="card-header">
+                    <a href=""></a>
+                </div>
+                <div class="card-body text-info">
+                    <p class="text-info comment-body"></p>
+                </div>
+                <div>
+                    <i class="date-comment-in-news">  </i>
+                </div>
+                <div class="text-right margin-top-30px margin-right5px">
+                    <div class="comment-id disp-none"></div>
+                    <button type="button" class="likes-button btn btn-link">Плюсануть</button>
+                    <span class="margin-lest-15px likes-field">0</span>
+                    <button type="button" class="dislikes-button btn btn-link">Минусануть</button>
+                    <span class="margin-lest-15px dislikes-field">0</span>
+                </div>
+            </div>
+         {#TEMPLATE BLOCK END#}
+
+
         {% endif %}
-        <div>
+        <div id="commets-block">
 
             {% for comment in comments %}
                 <div class="card border-info mb-3 margin-top9px">
@@ -74,6 +100,7 @@
                     </div>
             </div>
             {% endfor %}
+
 
          </div>
     </div>

@@ -33,25 +33,33 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('homepage') }}">Главная</a>
-            </li>
-
-
-            {#<li class="nav-item dropdown show">#}
-                {#<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="true">Поисковики&#160;&#160;<span class="caret"></span></a>#}
-                {#<div class="dropdown-menu" aria-labelledby="download">#}
-                    {#<a id="open-site-group-button" class="dropdown-item dropdown-toggle">Открыть Здесь</a>#}
-                    {#<div id="serch-site-group" style="display: none">#}
-                        {#<div class="dropdown-divider"></div>#}
-                        {#<a class="dropdown-item" href="https://www.google.com/">Google.com</a>#}
-                        {#<a class="dropdown-item" href="https://www.yahoo.com/">Yahoo</a>#}
-                        {#<a class="dropdown-item" href="https://meta.ua/">Meta.ua</a>#}
-                    {#</div>#}
-                    {#<div class="dropdown-divider"></div>#}
-                    {#<a class="dropdown-item" href="#">bootstrap.min.css</a>#}
-                {#</div>#}
+            {#<li class="nav-item">#}
+                {#<a class="nav-link" href="{{ path('homepage') }}">Главная</a>#}
             {#</li>#}
+
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle margin-right5px" data-toggle="dropdown">Вам сюда
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="{{ path('analitic_news') }}">Аналитические новости</a></li>
+                    <li><a tabindex="-1" href="{{ path('news_by_category',{'id' :  1 }) }}">Политические новости</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" href="#">Поисковики &#62; <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu ">
+                                <a class="test" href="#">Google &#62;<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="https://www.google.com/">Google.com</a></li>
+                                    <li><a href="https://www.google.com.ua/">Google.com.ua</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="https://www.yahoo.com/">Yahoo</a></li>
+                            <li><a href="https://meta.ua/">Meta.ua</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
 
 
             <li class="nav-item">
@@ -93,44 +101,48 @@
 
                 <input class="form-control mr-sm-2" name="email" type="text" placeholder="Email:" value="admin@admin.com">
                 <input class="form-control mr-sm-2" name="password" type="password" placeholder="Password:" value="admin">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Enter</button>
-
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Войти</button>
             </form>
-            <a class="btn btn-secondary my-2 my-sm-0" href="{{ path('registration') }}">Registration</a>
-        {% endif %}
-
+            <a class="btn btn-info my-2 my-sm-0" href="{{ path('registration') }}">Регистрация</a>        {% endif %}
     </div>
 </nav>
 
 <div class="container-fluid">
 
-
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 d-sm-none d-md-block">
 
             <div class="bg-my-blue blurb-form">
+                <span data-dickontprice="6300$"  class="dickontprice"></span>
+                <span data-realprice="7000$" class="realprice"></span>
                 <div class="blurb-item  font-medium">PORSCH 911</div>
-                <div class="blurb-saler text-warning "><legend>AvtoLog</legend></div>
-                <div class="blub-price "><b>100000</b><span>&#160;$</span></div>
-                <div class="blurb-diskon ">Скидка:<br>1NGN3RE<br><span class="">примените при покупке</span></div>
+                <div class="blurb-saler text-warning "><legend>Avto Log</legend></div>
+                <div class="blub-price price">7000$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
             </div>
             <div class="bg-my-soft-rad blurb-form">
-                <div class="blurb-item">ТОВАР</div>
-                <div class="blurb-saler">Продавец</div>
-                <div class="blub-price">Цена</div>
-                <div class="blurb-diskon">Скидка</div>
+                <span data-dickontprice="27$"  class="dickontprice"></span>
+                <span data-realprice="30$" class="realprice"></span>
+                <div class="blurb-item font-medium">Power bank xiaomi</div>
+                <div class="blurb-saler text-dark"><legend>Int Market</legend></div>
+                <div class="blub-price price">30$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
             </div>
             <div class="bg-my-soft-green blurb-form">
-                <div class="blurb-item">ТОВАР</div>
-                <div class="blurb-saler">Продавец</div>
-                <div class="blub-price">Цена</div>
-                <div class="blurb-diskon">Скидка</div>
+                <span data-dickontprice="180$"  class="dickontprice"></span>
+                <span data-realprice="200$" class="realprice"></span>
+                <div class="blurb-item font-medium">Ноутбук ASUS</div>
+                <div class="blurb-saler text-warning"><legend>Инт Маркет</legend></div>
+                <div class="blub-price price">200$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
             </div>
             <div class="bg-my-soft-grey blurb-form">
-                <div class="blurb-item">ТОВАР</div>
-                <div class="blurb-saler">Продавец</div>
-                <div class="blub-price">Цена</div>
-                <div class="blurb-diskon">Скидка</div>
+                <span data-dickontprice="20$" class="dickontprice"></span>
+                <span data-realprice="18$" class="realprice"></span>
+                <div class="blurb-item font-medium">Рюкзак</div>
+                <div class="blurb-saler text-danger"><legend>Одежда Центр</legend></div>
+                <div class="blub-price price">20$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
             </div>
 
         </div>
@@ -144,35 +156,71 @@
 
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-2 d-sm-none d-md-block">
+
+            <div class="bg-my-soft-grey blurb-form">
+                <span data-dickontprice="200$" class="dickontprice"></span>
+                <span data-realprice="180$" class="realprice"></span>
+                <div class="blurb-item font-medium">Lenovo p30</div>
+                <div class="blurb-saler text-danger"><legend>Sis Центр</legend></div>
+                <div class="blub-price price">200$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
+            </div>
+            <div class="bg-my-blue blurb-form">
+                <span data-dickontprice="8100$"  class="dickontprice"></span>
+                <span data-realprice="9000$" class="realprice"></span>
+                <div class="blurb-item  font-medium">Mazlf RX8</div>
+                <div class="blurb-saler text-warning "><legend>Avto Log</legend></div>
+                <div class="blub-price price">9000$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
+            </div>
+            <div class="bg-my-soft-green blurb-form">
+                <span data-dickontprice="360$"  class="dickontprice"></span>
+                <span data-realprice="400$" class="realprice"></span>
+                <div class="blurb-item font-medium">Ноутбук DELL</div>
+                <div class="blurb-saler text-warning"><legend>Инт Маркет</legend></div>
+                <div class="blub-price price">400$</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
+            </div>
+            <div class="bg-my-soft-rad blurb-form">
+                <span data-dickontprice="45грн"  class="dickontprice"></span>
+                <span data-realprice="50грн" class="realprice"></span>
+                <div class="blurb-item font-medium">Замена масла</div>
+                <div class="blurb-saler text-dark"><legend>Нов центр</legend></div>
+                <div class="blub-price price">50грн</div>
+                <div class="blurb-diskon discont-firld" style="display: none">Скидка:<br><span class="discont-number">{{ random('AZ15') }}{{ random('AZ') }}{{ random() }}</span><br><span>примените при покупке</span></div>
+            </div>
 
 
 
-            <div id="subscription-box" style="display: none">
-                <button type="button" class="close bg-danger close-green-windows">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="text-dark font-medium text-center margin-top12px">
-                    Подпишись на новости
-                </div>
 
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-green-windows-E" placeholder="Адрес почты . . .">
-                        <small class="form-text text-muted">&#160;&#160;&#160;Укажи e-mail</small>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-green-windows-F" placeholder="Фамилия . . .">
-                        <small class="form-text text-muted">&#160;&#160;&#160;Укажи фамилию</small>
-                    </div>
-                    <button type="button" class="btn btn-primary float-right i-need-this">Хочу рассылку</button>
-                </form>
-                <br>
-                <br>
-                <hr>
-            <div class="text-center">NEWS SITE</div>
 
             </div>
+
+        <div id="subscription-box" style="display: none">
+            <button type="button" class="close bg-danger close-green-windows">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="text-dark font-medium text-center margin-top12px">
+                Подпишись на новости
+            </div>
+
+            <form class="green-window">
+                <div class="form-group">
+                    <input type="email" class="form-control input-green-windows-E" placeholder="Адрес почты . . .">
+                    <small class="form-text text-muted">&#160;&#160;&#160;Укажи e-mail</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-green-windows-F" placeholder="Фамилия . . .">
+                    <small class="form-text text-muted">&#160;&#160;&#160;Укажи фамилию</small>
+                </div>
+                <button type="submit" class="btn btn-primary float-right i-need-this">Хочу рассылку</button>
+            </form>
+            <br>
+            <br>
+            <hr>
+            <div class="text-center">NEWS SITE</div>
+
 
 
 
@@ -187,6 +235,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 <script src="/webroot/js/script.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+</script>
+
 
 
 </html>

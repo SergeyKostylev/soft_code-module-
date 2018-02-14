@@ -43,6 +43,7 @@ class CommentRepository
                 'commentbody' => $comment_body,
                 'allow_show' => $allow_show
         ]);
+        return $this->pdo->lastInsertId();
     }
 
 
@@ -240,7 +241,6 @@ class CommentRepository
         $sth->execute([
             'id' => $user_id
         ]);
-
         return $sth->fetchColumn();
     }
 

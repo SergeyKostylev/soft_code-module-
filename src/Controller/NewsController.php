@@ -46,6 +46,7 @@ class NewsController extends BaseController
         ]);
 
 
+
         return $this->render('news_by_category.html.twig', [
             'category' => $category,
             'news_collection' => $news,
@@ -100,6 +101,7 @@ class NewsController extends BaseController
         $category = $this->getRepository('category')->findByID($news->getCategoryId());
         $comments = $this->getRepository('comment')->findById($paper_id);
         $users = $this->getRepository('user')->findMasAll();
+
 
         return $this->
             render('show.html.twig', [

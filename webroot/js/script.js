@@ -25,8 +25,6 @@ var $shownow =$('#showNow');
     }, 3000);
 
 
-
-
 var $topfivebutton = $('#topfivebutton');
 var $topfivebody = $('#topfivebody');
 
@@ -48,40 +46,70 @@ $topfivebutton.on('click',function () {
         $toptreeNewsbody.toggle(300);
     });
 
-
-
-
 var $addComment = $('.add-comment-button');
     $addComment.on('click', function () {
 
-
         var $commentField = $('.comment-textarea');
         var $comment = $commentField.val();
-        var $blokOk = $('.get-message-ok');
+        var $blokOk = $('.get-message');
         var $commentForm = $('.comment-form');
+        var $newsCatrgory = $('#category').data('category');
+        var $footerMessage = $('#footer');
+        var $commetsBlock = $('#commets-block');
 
         if($comment.length < 20){
             alert('Слишком короткий комментарий');
+
         }
         else {
             $.post('/api/add/comment',{
                 newsid : $('#newsid').data('newsid'),
                 commentbody : $comment
-                },'json');
-            $commentForm.fadeOut(390);
-            $blokOk.fadeIn(700);
-            setTimeout(function () {
-                $blokOk.fadeOut(390)
-            }, 2100);
+                },'json')
+                .done(function (r) {
+                    if ($newsCatrgory ===1){
+                        var $message = "Ваш комментарий увидят пользователи после одобрения модератора";
+                        $commentField.val('');
+                        $footerMessage.text($message);
+                        $footerMessage.fadeIn(1700);
+                        setTimeout(function () {
+                            $footerMessage.fadeOut(390)
+                        }, 3700);
+                    }else{
+                        $commentField.val('');
+                        var $newBlock = $('.empty-block').clone();
+                        $newBlock.fadeIn(900);
+                        var $userLink = $newBlock.find('.card-header').children();
+                        var $commentBody = $newBlock.find('.comment-body');
+                        var $dateComment = $newBlock.find('.date-comment-in-news');
+                        var $commentId = $newBlock.find('.comment-id');
+
+                        $userLink.text(r.userEmail).attr("href", "/user/"+r.userId+"/comment");
+                        $commentBody.text(r.commentBody);
+                        $dateComment.text(r.date);
+                        $commentId.text(r.commentId);
+                        $commetsBlock.append($newBlock);
+                        $message = "Ваш комментарий уже добавлен";
+                        $footerMessage.text($message);
+                        $footerMessage.fadeIn(1700);
+                        setTimeout(function () {
+                            $footerMessage.fadeOut(390)
+                        }, 3700);
+                    }
+                })
+                .fail(function (r) {
+                    var $message = "Что-то пошло не так";
+                    $footerMessage.text($message);
+                    $footerMessage.fadeIn(1700);
+                    setTimeout(function () {
+                        $footerMessage.fadeOut(390)
+                    }, 3700);
+                });
 
         }
     });
 
-
-
-    var $likesButton = $('.likes-button');
-
-    $likesButton.on('click', function () {
+    ClickLikeEvent = function () {
         var $this =$(this);
         var $commentId = $this.siblings().filter('.comment-id').text();
         var $footerMessage = $('#footer');
@@ -107,12 +135,10 @@ var $addComment = $('.add-comment-button');
                 }, 1200);
             })
         ;
-    });
+    };
 
 
-    var $dislikesButton = $('.dislikes-button');
-
-    $dislikesButton.on('click', function () {
+    ClickDislikeEvent = function () {
         var $this =$(this);
         var $commentId = $this.siblings().filter('.comment-id').text();
         var $footerMessage = $('#footer');
@@ -139,9 +165,10 @@ var $addComment = $('.add-comment-button');
                 }, 1200);
             })
         ;
-    });
+    };
 
-
+    $('#commets-block').on('click', '.likes-button' , ClickLikeEvent );
+    $('#commets-block').on('click', '.dislikes-button' , ClickDislikeEvent );
 
 
     setTimeout(function () {
@@ -179,9 +206,6 @@ var $addComment = $('.add-comment-button');
     $('.comment-block').on('click', '.approval-button' ,resolutionComment);
 
 
-
-
-
     var $serch = $('#serch-button');
     var $searchField = $('#search-field');
     var $lowpfield = $('#lowp-field');
@@ -208,7 +232,7 @@ var $addComment = $('.add-comment-button');
                         $lowpfield.fadeIn();
 
                         var $ansver = $allTegsWords[i].indexOf($serchword);
-                        console.log($ansver);
+                        //console.log($ansver);
                         if( $ansver === 0 ){
 
                             $tegs[$allIds[i]] = $allTegsWords[i];
@@ -226,8 +250,6 @@ var $addComment = $('.add-comment-button');
 
 
 
-
-
     var $pagination =$('.pagination');
 
     $pagination.children().filter( ':first , :last' ).remove();
@@ -236,7 +258,7 @@ var $addComment = $('.add-comment-button');
     var $template = $('.page-item-template');
     var $treepointButton = $template.clone();
     var $length = $pagination.children().length;
-    console.log($length);
+    //console.log($length);
     if ($length !== 2){
     $bitweenbutton.toggle();
     $treepointButton.removeClass('disp-none');
@@ -259,24 +281,50 @@ var $addComment = $('.add-comment-button');
         $subscriptionBox.fadeOut(500);
     });
 
-    var $iNeedThis = $('.i-need-this');
     var $inputGreenWindowsE = $('.input-green-windows-E');
     var $inputGreenWindowsF = $('.input-green-windows-F');
-    $iNeedThis.on('click', function () {
+    var $greenWindow = $('.green-window');
 
+    $greenWindow.submit(function (event) {
         if(!$inputGreenWindowsE.val() || !$inputGreenWindowsF.val()){
           alert("Укажите данные");
+            event.preventDefault();
         }else{
             $.post('/api/dispatch',{
-                email : $inputGreenWindowsF.val(),
-                name : $inputGreenWindowsE.val()
+                email : $inputGreenWindowsE.val(),
+                name : $inputGreenWindowsF.val()
             },'json');
             setTimeout(function () {
                 $subscriptionBox.fadeOut(900)
             }, 100);
+            event.preventDefault();
         }
     });
 
+
+    var $blurbForm = $('.blurb-form');
+    $blurbForm.hover(function () {
+        var $this = $(this);
+        var $price = $this.children().filter('.price');
+        var $discPriceData = $this.children().filter('.dickontprice');
+        var $discPrice = $discPriceData.data('dickontprice');
+        var $discontFirld = $this.children().filter('.discont-firld');
+        $price.text($discPrice);
+        $price.addClass('blurb-price-dick');
+        $discontFirld.fadeIn(900);
+
+    },
+        function() {
+            var $this = $(this);
+            var $price = $this.children().filter('.price');
+            var $realPriceData = $this.children().filter('.realprice');
+            var $realPrice = $realPriceData.data('realprice');
+            var $discontFirld = $this.children().filter('.discont-firld');
+            $price.text($realPrice);
+            $price.removeClass('blurb-price-dick');
+            $discontFirld.fadeOut(100);
+
+        });
 
     $('#search-field').keydown(function(event){
         if(event.keyCode == 13) {
@@ -295,10 +343,6 @@ var $addComment = $('.add-comment-button');
         $dropdownMenu.fadeIn();
 
     });
-
-
-
-
 
 
     var slideNow = 1;

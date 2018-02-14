@@ -60,6 +60,16 @@ class APIRepository
         ]);
     }
 
+    public function checkDuplicateDispatchEntry($email)
+    {
+        $sth = $this->pdo->prepare('SELECT id, email, user_name FROM dispatch WHERE email = :email');
+        $sth->execute([
+            'email' => $email
+        ]);
+        $res = $sth->fetch(\PDO::FETCH_ASSOC);
+        return $res;
+    }
+
 
 
 }
