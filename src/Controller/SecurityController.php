@@ -90,7 +90,7 @@ class SecurityController extends BaseController
                         ->searchByEmail($form->email);
                 if (!$rez){
                     $this
-                        ->getRepository('user')
+                        ->getRepository('User')
                         ->userAdd($form->email , $form->password);
 
                     $this->getRouter()->redirect('homepage');

@@ -18,15 +18,14 @@ class CommentController extends BaseController
         $page = $request->get('page', 1);
 
         $user_id = $request->get('id');
-        $user = $this->getRepository('user')->findById($user_id);
+        $user = $this->getRepository('User')->findById($user_id);
         if (!$user) {
             throw new \Exception('Пользователь не найден');
         }
 
-        $repo = $this->getRepository('comment');
+        $repo = $this->getRepository('Comment');
 
         $count = $repo->countUserComment($user_id);
-
         $comments = $repo
             ->finbByUserID
             ($user_id,

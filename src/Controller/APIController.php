@@ -20,9 +20,9 @@ class APIController extends BaseController
         $idNews = $request->get('idnews');
         $showNow = $request->get('shownow');
 
-        $allShowAmount = $this->getRepository('api')->findAllShowAmuont($idNews);
+        $allShowAmount = $this->getRepository('API')->findAllShowAmuont($idNews);
         $newAmount = $allShowAmount+$showNow;
-        $this->getRepository('api')->setShowAmuont($idNews,$newAmount);
+        $this->getRepository('API')->setShowAmuont($idNews,$newAmount);
         header('Content-type: application/json');
 
         return json_encode(['amount' => $newAmount]);
@@ -35,10 +35,10 @@ class APIController extends BaseController
     {
         $email = $request->post('email');
         $name = $request->post('name');
-        $duplicate = $this->getRepository('api')->checkDuplicateDispatchEntry($email);
+        $duplicate = $this->getRepository('API')->checkDuplicateDispatchEntry($email);
 
         if(!$duplicate){
-        $this->getRepository('api')->setDispatchEntry($email,$name);
+        $this->getRepository('API')->setDispatchEntry($email,$name);
         }
     }
 
@@ -54,18 +54,18 @@ class APIController extends BaseController
             return null;
         }
         $news_id = $request->post('newsid');
-        $news = $this->getRepository('news')->findNews($news_id);
+        $news = $this->getRepository('News')->findNews($news_id);
 
         $news_category = $news->getCategoryId();
         $allow_show = 1;
         if ($news_category == 1){
             $allow_show =0;
         }
-        $user = $this->getRepository('user')->getUserByEmail(Session::get('user'));
+        $user = $this->getRepository('User')->getUserByEmail(Session::get('user'));
         $comment_body = $request->post('commentbody');
 
-        $id = $this->getRepository('comment')->uploadComment($news_id,$user->getId(),$comment_body, $allow_show);
-        $comment = $this->getRepository('comment')->findCommentById($id);
+        $id = $this->getRepository('Comment')->uploadComment($news_id,$user->getId(),$comment_body, $allow_show);
+        $comment = $this->getRepository('Comment')->findCommentById($id);
 
         $answer = [
             'userId' => $user->getId(),
@@ -86,7 +86,7 @@ class APIController extends BaseController
 //          /api/search
     public function search(Request $request )
     {
-        $tegs =$this->getRepository('tag')->findAll();
+        $tegs =$this->getRepository('Tag')->findAll();
         $collection = [];
         $ids = [];
         $tagword =[];
@@ -109,7 +109,7 @@ class APIController extends BaseController
     {
         $idComment = $request->post('commentid');
         $CommentBody = $request->post('commentbody');
-        $this->getRepository('api')->applauseComment($idComment,$CommentBody);
+        $this->getRepository('API')->applauseComment($idComment,$CommentBody);
 
     }
 //      /api/likes
@@ -123,12 +123,12 @@ class APIController extends BaseController
             ]);
         }
         $user_email = Session::get('user');
-        $user = $this->getRepository('user')->getUserByEmail($user_email);
+        $user = $this->getRepository('User')->getUserByEmail($user_email);
         $user_id = $user->getId();
         $comment_id = $request->post('commentid');
-        $sense = $this->getRepository('comment')->getMark($user_id, $comment_id);
+        $sense = $this->getRepository('Comment')->getMark($user_id, $comment_id);
 
-        $comment = $this->getRepository('comment')->findCommentById($comment_id);
+        $comment = $this->getRepository('Comment')->findCommentById($comment_id);
 
         $likes_amount = $comment->getLikes();
         $dislikes_amount = $comment->getDislikes();
@@ -137,9 +137,9 @@ class APIController extends BaseController
 
         if($sense == null){
             $mark = 1;
-            $this->getRepository('comment')->insertMark($user_id,$comment_id,$mark);     //   РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->insertMark($user_id,$comment_id,$mark);     //   РАСКОММЕНТИРОВАТЬ
             $likes_amount++;
-            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);    //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateLikes($comment_id,$likes_amount);    //  РАСКОММЕНТИРОВАТЬ
             http_response_code(200);
             header('Content-type: application/json');
             return json_encode([
@@ -150,9 +150,9 @@ class APIController extends BaseController
         }
         if($sense == 0){
             $mark = 1;
-            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
             $likes_amount++;
-            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
             http_response_code(200);
             header('Content-type: application/json');
             return json_encode([
@@ -164,9 +164,9 @@ class APIController extends BaseController
 
         if($sense == 1){
             $mark = 0;
-            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
             $likes_amount--;
-            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
             header('Content-type: application/json');
             return json_encode([
                 'likes' => $likes_amount,
@@ -176,11 +176,11 @@ class APIController extends BaseController
         }
         if($sense == -1){
             $mark = 1;
-            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
             $likes_amount++;
             $dislikes_amount--;
-            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
-            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
             http_response_code(200);
             header('Content-type: application/json');
             return json_encode([
@@ -208,12 +208,12 @@ class APIController extends BaseController
             ]);
         }
         $user_email = Session::get('user');
-        $user = $this->getRepository('user')->getUserByEmail($user_email);
+        $user = $this->getRepository('User')->getUserByEmail($user_email);
         $user_id = $user->getId();
         $comment_id = $request->post('commentid');
-        $sense = $this->getRepository('comment')->getMark($user_id, $comment_id);
+        $sense = $this->getRepository('Comment')->getMark($user_id, $comment_id);
 
-        $comment = $this->getRepository('comment')->findCommentById($comment_id);
+        $comment = $this->getRepository('Comment')->findCommentById($comment_id);
 
         $likes_amount = $comment->getLikes();
         $dislikes_amount = $comment->getDislikes();
@@ -222,9 +222,9 @@ class APIController extends BaseController
 
         if($sense == null){
             $mark = -1;
-            $this->getRepository('comment')->insertMark($user_id,$comment_id,$mark);     //   РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->insertMark($user_id,$comment_id,$mark);     //   РАСКОММЕНТИРОВАТЬ
             $dislikes_amount++;
-            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);    //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateDislikes($comment_id,$dislikes_amount);    //  РАСКОММЕНТИРОВАТЬ
             http_response_code(200);
             header('Content-type: application/json');
             return json_encode([
@@ -235,9 +235,9 @@ class APIController extends BaseController
         }
         if($sense == 0){
             $mark = -1;
-            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
             $dislikes_amount++;
-            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
             http_response_code(200);
             header('Content-type: application/json');
             return json_encode([
@@ -248,11 +248,11 @@ class APIController extends BaseController
         }
         if($sense == 1){
             $mark = -1;
-            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
             $likes_amount--;
             $dislikes_amount++;
-            $this->getRepository('comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
-            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateLikes($comment_id,$likes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
             header('Content-type: application/json');
             return json_encode([
                 'likes' => $likes_amount,
@@ -262,9 +262,9 @@ class APIController extends BaseController
         }
         if($sense == -1){
             $mark = 0;
-            $this->getRepository('comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateMark($user_id,$comment_id,$mark);      //  РАСКОММЕНТИРОВАТЬ
             $dislikes_amount--;
-            $this->getRepository('comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
+            $this->getRepository('Comment')->updateDislikes($comment_id,$dislikes_amount);     // РАСКОММЕНТИРОВАТЬ
             http_response_code(200);
             header('Content-type: application/json');
             return json_encode([

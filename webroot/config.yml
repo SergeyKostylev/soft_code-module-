@@ -1,0 +1,160 @@
+parameters:
+    database_user: 'kossmos-9'
+    database_name: 'news'
+    database_host: 'localhost'
+    database_password: '12345tools1A'
+    uploads_dir: 'uploads'
+    noreply_email: 'noreply@mvc.com'
+    some_api_key: '5sdf7hsf5s76f5hs7d5f'
+
+
+#mailer:
+#    email: 's03540@ukr.net'
+#    password: '12345tools1'
+#    host: 'smtp.ukr.net'
+#    port: 465
+#    encryption: 'ssl'
+#    allow_self_signe: true
+#    verify_peer: false
+
+
+routing:
+    homepage:
+        pattern: /
+        controller: DefaultController
+        action: indexAction
+    sign_in:
+        pattern: /sign-in
+        controller: SecurityController
+        action: loginAction
+
+    login_exit:
+        pattern: /logout
+        controller: SecurityController
+        action: logoutAction
+
+
+    registration:
+        pattern: /registration
+        controller: SecurityController
+        action: registrationAction
+
+    news_by_category:
+        pattern: /news/category/{id}
+        controller: NewsController
+        action: newsByCategoryAction
+        parameters:
+            id: '[0-9]+'
+
+    analitic_news:
+        pattern: /news/analitic
+        controller: NewsController
+        action: analiticNewsAction
+
+    news_by_tag:
+        pattern: /news/tag/{id}
+        controller: NewsController
+        action: newsByTagAction
+        parameters:
+            id: '[0-9]+'
+
+    paper_show:
+        pattern: /paper/{id}
+        controller: NewsController
+        action: paperShowAction
+        parameters:
+            id: '[0-9]+'
+
+    user_comment:
+        pattern: /user/{id}/comment
+        controller: CommentController
+        action: indexAction
+        parameters:
+            id: '[0-9]+'
+
+#API
+
+    show_amount:
+        pattern: /showamount/{idnews}/{shownow}
+        controller: APIController
+        action: showAmount
+        parameters:
+            idnews: '[0-9]+'
+            shownow: '[0-9]+'
+
+
+    api_add_comment:
+        pattern: /api/add/comment
+        controller: APIController
+        action: addComment
+
+
+    api_search:
+        pattern: /api/search
+        controller: APIController
+        action: search
+
+
+    api_applause:
+        pattern: /api/applause
+        controller: APIController
+        action: applause
+
+    api_likes:
+        pattern: /api/likes
+        controller: APIController
+        action: likes
+
+    api_dislikes:
+        pattern: /api/dislikes
+        controller: APIController
+        action: dislikes
+
+    api_dispatch:
+        pattern: /api/dispatch
+        controller: APIController
+        action: dispatch
+
+
+#admin
+
+    admin_home:
+        access : admin
+        pattern: /admin
+        controller: Admin\DefaultController
+        action: indexAction
+
+    admin_news_add:
+        access : admin
+        pattern: /admin/add/news
+        controller: Admin\NewsController
+        action: addAction
+
+    admin_permit_news:
+        access : admin
+        pattern: /admin/permit
+        controller: Admin\CommentController
+        action: allCommentsAction
+
+    admin_catrgory_add:
+        access : admin
+        pattern: /admin/add/catrgory
+        controller: Admin\CategoryController
+        action: addAction
+
+
+
+
+
+
+
+
+#    admin_book_edit:
+#      pattern: /admin/book_edit/{id}
+#      controller: Admin\BookController
+#      action: editAction
+#      access: admin
+#      parameters:
+#          id: '[0-9]+'
+
+

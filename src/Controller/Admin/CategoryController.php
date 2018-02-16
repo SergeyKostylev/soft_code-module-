@@ -24,7 +24,7 @@ class CategoryController extends BaseController
             Session::setFlash('Введите назватие');
             $answer =0;
             if($form->isValid()){
-                $this->getRepository('category')->add($form->getName());
+                $this->getRepository('Category')->add($form->getName());
                 $answer =1;
                 Session::setFlash('Категория добавлена');
                 return $this->getRouter()->redirect('admin_catrgory_add');

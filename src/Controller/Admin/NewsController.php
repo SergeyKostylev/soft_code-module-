@@ -33,13 +33,13 @@ class NewsController extends BaseController
                 $tags_collection=[];
                 foreach($word_collection as $word){
 
-                    $tag = $this->getRepository('tag')->findByWord($word);
+                    $tag = $this->getRepository('Tag')->findByWord($word);
                     if ($tag){
                         $tags_collection[$tag->getId()] = $tag->getWord();
                     }
                     if(!$tag){
-                        $id = $this->getRepository('tag')->getNewIdOfTag();
-                        $this->getRepository('tag')->addTag($id,$word);
+                        $id = $this->getRepository('Tag')->getNewIdOfTag();
+                        $this->getRepository('Tag')->addTag($id,$word);
                         $tags_collection[$id] = $word;
                     }
                 }
@@ -54,9 +54,9 @@ class NewsController extends BaseController
                 ));
                     $file->upload();
 
-                $id = $this->getRepository('news')->getNewIdOfNews();
+                $id = $this->getRepository('News')->getNewIdOfNews();
 
-                $this->getRepository('news')->add(
+                $this->getRepository('News')->add(
                     $id,
                     $form->getName(),
                     $form->getCategory(),
@@ -67,13 +67,13 @@ class NewsController extends BaseController
 
                 foreach($tags_collection as $key => $tag ){
 
-                    $this->getRepository('news')->setTagForNews($id,$key);
+                    $this->getRepository('News')->setTagForNews($id,$key);
 
                 }
                 return $this->getRouter()->redirect('admin_news_add');
             }
         }
-        $categories= $this->getRepository('category')->findAll();
+        $categories= $this->getRepository('Category')->findAll();
 
         return $this->render('add.html.twig',
             ['categories' => $categories,

@@ -14,7 +14,9 @@
             {% if comments|length == 0 %}
                 <h2>Этот пользователь еще не оставлял комментарии...</h2>
             {% endif %}
-            {% for comment in comments %}
+
+
+            {#{% for comment in comments %}#}
                 <div id="commets-block">
 
                     {% for comment in comments %}
@@ -38,9 +40,8 @@
                         </div>
                     {% endfor %}
 
-
                 </div>
-            {% endfor %}
+            {#{% endfor %}#}
 
          </div>
     </div>

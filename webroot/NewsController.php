@@ -23,7 +23,7 @@ class NewsController extends BaseController
         $page = $request->get('page', 1);
 
         $category_id = $request->get('id');
-        $category = $this->getRepository('Category')->findByID($category_id);
+        $category = $this->getRepository('category')->findByID($category_id);
         if (!$category) {
             throw new \Exception('Категория отсутствует');
         }
@@ -60,7 +60,7 @@ class NewsController extends BaseController
         $page = $request->get('page', 1);
 
         $tag_id = $request->get('id');
-        $tag = $this->getRepository('Tag')->findById($tag_id);
+        $tag = $this->getRepository('tag')->findById($tag_id);
 
         if (!$tag) {
             throw new \Exception('Такой тег не существует');
@@ -94,13 +94,13 @@ class NewsController extends BaseController
     public function paperShowAction(Request $request)
     {
         $paper_id = $request->get('id');
-        $news = $this->getRepository('News')->findNews($paper_id);
+        $news = $this->getRepository('news')->findNews($paper_id);
         if (!$news) {
             throw new \Exception('Новость не найдена');
         }
-        $category = $this->getRepository('Category')->findByID($news->getCategoryId());
-        $comments = $this->getRepository('Comment')->findById($paper_id);
-        $users = $this->getRepository('User')->findMasAll();
+        $category = $this->getRepository('category')->findByID($news->getCategoryId());
+        $comments = $this->getRepository('comment')->findById($paper_id);
+        $users = $this->getRepository('user')->findMasAll();
 
 
         return $this->

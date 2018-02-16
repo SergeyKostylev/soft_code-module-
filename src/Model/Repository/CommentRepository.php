@@ -155,6 +155,7 @@ class CommentRepository
             $limitSql = "limit {$count}, {$options['items_on_page']}";
         }
 
+
         $collection =[];
         $sth = $this->pdo->prepare('SELECT * FROM comment WHERE user_id = :userId AND allow_show = 1 ORDER BY likes DESC '. $limitSql .';');
         $sth->execute([
@@ -237,10 +238,11 @@ class CommentRepository
 
     public function countUserComment($user_id)
     {
-        $sth = $this->pdo->prepare('SELECT count(*) as count From comment WHERE user_id = :id');
+        $sth = $this->pdo->prepare('SELECT count(*) as count From comment WHERE user_id = :id AND comment.allow_show =1');
         $sth->execute([
             'id' => $user_id
         ]);
+
         return $sth->fetchColumn();
     }
 

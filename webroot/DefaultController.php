@@ -12,22 +12,22 @@ class DefaultController extends BaseController
 {
     public function indexAction(Request $request)
     {
-        $categorys = $this->getRepository('Category')->findAll();
-        $analiticNews = array_slice($this->getRepository('News')->analiticNews(), 0, 5);
+        $categorys = $this->getRepository('category')->findAll();
+        $analiticNews = array_slice($this->getRepository('news')->analiticNews(), 0, 5);
         $collection['Аналитика'] = $analiticNews;
 
         foreach ($categorys as $category){
             $category_id = $category->getId();
-            $news = $this->getRepository('News')->findFiveLastNews($category_id);
+            $news = $this->getRepository('news')->findFiveLastNews($category_id);
             $collection[$category->getName()] = $news;
         }
-        $lastFour = $this->getRepository('News')->findLastFour();
+        $lastFour = $this->getRepository('news')->findLastFour();
         foreach ($collection as $key => $new){
             if (($new == null)){unset($collection[$key]);}
         }
 
-        $top_five_users_by_comments = $this->getRepository('User')->topFiveUsersByComments();
-        $top_tree_discussion_news = $this->getRepository('News')->topTreeDiscussionNews();
+        $top_five_users_by_comments = $this->getRepository('user')->topFiveUsersByComments();
+        $top_tree_discussion_news = $this->getRepository('news')->topTreeDiscussionNews();
 
         return $this->render('index.html.twig',
             ['collectionNews' => $collection,
